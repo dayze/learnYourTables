@@ -1,10 +1,15 @@
 <template>
   <div>
-    {{table}}
+    Quel est le résultat de: {{table}} x {{ multiplicator}}
+    <div v-for="response in responses">
+      {{response.value}}
+    </div>
   </div>
 </template>
 
 <script>
+  import _ from 'lodash'
+
   export default {
     name: 'tables',
     props: {
@@ -13,23 +18,27 @@
     data () {
       return {
         turn: 1,
-        multiplicator: Math.round((Math.random() * Math.floor(10)))
+        multiplicator: null,
+        responses: []
       }
     },
     methods: {
-      getResult () {
-        return this.table * (Math.random() * Math.floor(10))
+      setResponses () {
+        this.responses.push({value: this.getResult(), isCorrect: true})
+        this.responses.push({value: this.getResult() - this.table, isCorrect: false})
+        this.responses.push({value: this.getResult() + this.table, isCorrect: false})
+        this.responses = _.shuffle(this.responses)
       },
-      getNextQuestion () {
-
+      getResult () {
+        return this.table * this.multiplicator
+      },
+      getNextMultiplicator () {
+        return Math.round((Math.random() * Math.floor(9))) + 1
       }
     },
-    mounted: function () {
-      /*   this.$nextTick(function () {
-           // Code that will run only after the
-           // entire view has been rendered
-         })*/
-      console.log(this.multiplicator)
+    mounted () {
+      this.multiplicator = this.getNextMultiplicator()
+      this.setResponses()
     }
   }
 </script>
