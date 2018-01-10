@@ -1,15 +1,20 @@
 <template>
-  <div>home</div>
+  <div>
+    <Table></Table>
+  </div>
 </template>
 
 <script>
-export default {
-  name: 'HelloWorld',
-  data () {
-    return {
+  import Table from './Tables'
 
+  export default {
+    name: 'HelloWorld',
+    components: {
+      Table
+    },
+    data () {
+      return {}
     }
   }
-}
 </script>
 
