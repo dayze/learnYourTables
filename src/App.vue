@@ -1,13 +1,21 @@
 <template>
   <div id="app">
-    <router-view/>
+    <header-layout></header-layout>
+    <main class="container margin-50-top-bottom">
+      <router-view/>
+    </main>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'app'
-}
+  import HeaderLayout from './components/Header.vue'
+
+  export default {
+    name: 'app',
+    components: {
+      HeaderLayout
+    }
+  }
 </script>
 
 <style>
