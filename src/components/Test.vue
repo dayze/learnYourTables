@@ -16,46 +16,59 @@
      </div>-->
 
     <!-- QUESTION GRID -->
-    <div class="grid justify-center">
-      <div class="cell-12">
-        <h1 class="text-center-m">
-          <span class="color-turquoise font-weight-bold margin-right font-size-giant block-s">#{{ turn }}</span>
-          <span>What is the result of :</span>
-        </h1>
+    <div v-if="!showResults">
+      <div class="grid justify-center">
+        <div class="cell-12">
+          <h1 class="text-center-m">
+            <span class="color-turquoise font-weight-bold margin-right font-size-giant block-s">#{{ turn }}</span>
+            <span>What is the result of :</span>
+          </h1>
+        </div>
+        <div class="cell-12 text-center font-size-giant">
+          <span class="font-weight-bold color-turquoise">{{table}}</span>
+          <span>x </span>
+          <span class="font-weight-bold color-turquoise">{{ multiplicator}}</span>
+          <span>=</span>
+          <span class="color-orange">?</span>
+        </div>
       </div>
-      <div class="cell-12 text-center font-size-giant">
-        <span class="font-weight-bold color-turquoise">{{table}}</span>
-        <span>x </span>
-        <span class="font-weight-bold color-turquoise">{{ multiplicator}}</span>
-        <span>=</span>
-        <span class="color-orange">?</span>
+
+      <!-- ANSWERS GRID -->
+      <div class="grid-column-xs justify-center">
+        <div @click="checkAnswer(response)" v-for="response in responses"
+             class="cell-2 cell-3-m cell-4-s text-center padding shaded-box font-size-big cursor-pointer hover-color-turquoise">
+          {{response.value}}
+        </div>
+      </div>
+
+      <!-- HELP & NEXT BUTTON GRID -->
+      <div class="grid">
+        <div class="cell-12">
+          <p class="margin-50-top text-center">
+            <span class="color-turquoise font-weight-bold">?</span>
+            <span class="font-weight-bold">Help</span>
+            <span>: You have to click on one of the three answers above.</span>
+          </p>
+        </div>
+        <div class="cell-12 text-center">
+          <button @click="getNextQuestion"
+                  class="button borders-0 bg-emerald color-yang hover-bg-nephritis font-size-medium"
+                  :disabled="!nextQuestion">
+            Next question
+          </button>
+        </div>
       </div>
     </div>
-
-    <!-- ANSWERS GRID -->
-    <div class="grid-column-xs justify-center">
-      <div @click="checkAnswer(response)" v-for="response in responses"
-           class="cell-2 cell-3-m cell-4-s text-center padding shaded-box font-size-big cursor-pointer hover-color-turquoise">
-        {{response.value}}
-      </div>
-    </div>
-
-    <!-- HELP & NEXT BUTTON GRID -->
-    <div class="grid">
-      <div class="cell-12">
-        <p class="margin-50-top text-center">
-          <span class="color-turquoise font-weight-bold">?</span>
-          <span class="font-weight-bold">Help</span>
-          <span>: You have to click on one of the three answers above.</span>
-        </p>
-      </div>
-      <div class="cell-12 text-center">
-        <button @click="getNextQuestion"
-                class="button borders-0 bg-emerald color-yang hover-bg-nephritis font-size-medium"
-                :disabled="!nextQuestion">
-          Next question
-        </button>
-      </div>
+    <div v-else>
+      <ul class="list-unstyled">
+        <template v-for="data in this.history.questionsAndAnswers">
+          <li>
+            <span :class="[data.isCorrect ? 'color-emerald' : 'color-alizarin']">
+              {{data.table}} x {{data.multiplicator}} = {{data.response}}
+            </span>
+          </li>
+        </template>
+      </ul>
     </div>
 
 
@@ -64,7 +77,8 @@
 
 <script>
   import shuffle from 'lodash/shuffle'
-import History from '../History'
+  import History from '../History'
+
   export default {
     name: 'tables',
     props: {
@@ -74,6 +88,7 @@ import History from '../History'
       return {
         turn: 1,
         score: 0,
+        showResults: false,
         nextQuestion: false,
         multiplicator: null,
         responses: [],
@@ -96,7 +111,7 @@ import History from '../History'
           this.nextQuestion = false
           this.play()
         } else {
-          this.endPlay()
+          this.showResults = true
         }
       },
       checkAnswer (response) {
