@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="anim-forward overlay">
 
     <div class="grid-column-reverse-s">
       <div class="cell-12-no-gutters">

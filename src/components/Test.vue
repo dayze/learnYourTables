@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="overlay anim-backward">
 
     <!-- TODO : SCORE GRID -->
     <!-- <div class="grid">
