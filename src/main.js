@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import 'magic-monkey'
+import './assets/css/fonts.min.css'
 
 Vue.config.productionTip = false
 

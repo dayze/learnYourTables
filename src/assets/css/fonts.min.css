@@ -1,0 +1,39 @@
+@font-face {
+  font-family: bebas;
+  src: url('../font/BebasNeue.otf')
+}
+
+@font-face {
+  font-family: huntress;
+  src: url('../font/huntress.otf')
+}
+
+@font-face {
+  font-family: boulevard;
+  src: url('../font/Boulevard-Saint-Denis.ttf')
+}
+
+@font-face {
+  font-family: stonb;
+  src: url('../font/stoney_billy/STONB.ttf')
+}
+
+.APP_font_bebas {
+  font-family: bebas, sans-serif
+}
+
+.APP_font_huntress {
+  font-family: huntress, sans-serif
+}
+
+.APP_font_boulevard {
+  font-family: boulevard, sans-serif
+}
+
+.APP_font_stonb {
+  font-family: stonb, sans-serif
+}
+
+.APP_font_default {
+  font-family: Tahoma, Geneva, sans-serif
+}
