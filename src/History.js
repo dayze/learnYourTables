@@ -8,7 +8,7 @@ class History {
     this.questionsAndAnswers.push({table, multiplicator, response: value, isCorrect})
   }
   gameEnd () {
-    // push to localstorage
+    window.localStorage.setItem('' + this.date.getTime(), JSON.stringify(this))
   }
 }
 

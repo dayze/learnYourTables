@@ -69,6 +69,7 @@
           </li>
         </template>
       </ul>
+      <button @click="endPlay">Fin</button>
     </div>
 
 
