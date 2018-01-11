@@ -1,6 +1,5 @@
 <template>
   <div class="overlay anim-backward">
-
     <!-- TODO : SCORE GRID -->
     <!-- <div class="grid">
        <div class="cell-12 shaded-box text-right font-size-medium padding borders-bottom borders-silver">
@@ -14,7 +13,6 @@
          </ul>
        </div>
      </div>-->
-
     <!-- QUESTION GRID -->
     <div v-if="!showResults">
       <div class="grid justify-center">
@@ -36,7 +34,8 @@
       <!-- ANSWERS GRID -->
       <div class="grid-column-xs justify-center">
         <div @click="checkAnswer(response)" v-for="response in responses"
-             class="cell-2 cell-3-m cell-4-s text-center padding shaded-box font-size-big cursor-pointer hover-color-turquoise">
+             class="cell-2 cell-3-m cell-4-s text-center padding shaded-box font-size-big cursor-pointer
+              hover-color-turquoise" :class="[response.selected ? 'bg-emerald color-yang' : '']">
           {{response.value}}
         </div>
       </div>
@@ -71,8 +70,6 @@
       </ul>
       <button @click="endPlay">Fin</button>
     </div>
-
-
   </div>
 </template>
 
@@ -116,6 +113,7 @@
         }
       },
       checkAnswer (response) {
+        this.selectAnswer(response)
         if (!this.nextQuestion) {
           this.history.addQuestionsAndAnswers(this.table, this.multiplicator, response)
           if (response.isCorrect) {
@@ -126,10 +124,16 @@
         }
       },
       setResponses () {
-        this.responses.push({value: this.getResult(), isCorrect: true})
-        this.responses.push({value: this.getResult() - this.table, isCorrect: false})
-        this.responses.push({value: this.getResult() + this.table, isCorrect: false})
+        this.responses.push({value: this.getResult(), isCorrect: true, selected: false})
+        this.responses.push({value: this.getResult() - this.table, isCorrect: false, selected: false})
+        this.responses.push({value: this.getResult() + this.table, isCorrect: false, selected: false})
         this.responses = shuffle(this.responses)
+      },
+       selectAnswer (response) {
+         for (let response of this.responses) {
+           response.selected = false
+         }
+        response.selected = true
       },
       getResult () {
         return this.table * this.multiplicator
