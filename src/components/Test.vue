@@ -63,8 +63,8 @@
 </template>
 
 <script>
-  import _ from 'lodash'
-
+  import shuffle from 'lodash/shuffle'
+import History from '../History'
   export default {
     name: 'tables',
     props: {
@@ -76,19 +76,33 @@
         score: 0,
         nextQuestion: false,
         multiplicator: null,
-        responses: []
+        responses: [],
+        history: new History()
       }
     },
     methods: {
+      play () {
+        this.responses = []
+        this.multiplicator = this.getNextMultiplicator()
+        this.setResponses()
+      },
+      endPlay () {
+        this.history.gameEnd()
+        this.$router.go(-1)
+      },
       getNextQuestion () {
-        this.turn !== 5 ? this.turn++ : this.turn = 1
-        alert(this.turn)
-        /* TODO : ??? template method ??? */
-        this.nextQuestion = false
+        if (this.turn < 5) {
+          this.turn++
+          this.nextQuestion = false
+          this.play()
+        } else {
+          this.endPlay()
+        }
       },
       checkAnswer (response) {
         if (!this.nextQuestion) {
-          if (response.value === this.getResult) {
+          this.history.addQuestionsAndAnswers(this.table, this.multiplicator, response)
+          if (response.isCorrect) {
             this.score++
           }
           /* TODO : display the good and the bad answer if necessary */
@@ -99,7 +113,7 @@
         this.responses.push({value: this.getResult(), isCorrect: true})
         this.responses.push({value: this.getResult() - this.table, isCorrect: false})
         this.responses.push({value: this.getResult() + this.table, isCorrect: false})
-        this.responses = _.shuffle(this.responses)
+        this.responses = shuffle(this.responses)
       },
       getResult () {
         return this.table * this.multiplicator
@@ -110,8 +124,7 @@
     }
     ,
     mounted () {
-      this.multiplicator = this.getNextMultiplicator()
-      this.setResponses()
+      this.play()
     }
   }
 </script>

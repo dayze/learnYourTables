@@ -3273,9 +3273,9 @@ macaddress@^0.2.8:
   version "0.2.8"
   resolved "https://registry.yarnpkg.com/macaddress/-/macaddress-0.2.8.tgz#5904dc537c39ec6dbefeae902327135fa8511f12"
 
-magic-monkey@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/magic-monkey/-/magic-monkey-2.0.3.tgz#13fd1798a5f943924da557d5c55de799e1e3cdab"
+magic-monkey@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/magic-monkey/-/magic-monkey-2.0.4.tgz#1df97299b7002929a962c39dac77d3523aec1c3b"
 
 make-dir@^1.0.0:
   version "1.1.0"
