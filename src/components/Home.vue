@@ -25,7 +25,6 @@
         </figure>
       </router-link>
 
-
       <router-link :to="{ name: 'Choices', params: {testType: TEST_TYPE_EVALUATION}}"
                    class="cell-4 cell-6-m hover-shaded-box cursor-pointer">
         <figure>
@@ -39,7 +38,6 @@
         </figure>
       </router-link>
 
-
       <router-link :to="{ name: 'Choices'}"
                    class="cell-4 cell-6-m hover-shaded-box cursor-pointer">
         <figure>
@@ -52,8 +50,6 @@
           </figcaption>
         </figure>
       </router-link>
-
-
     </div>
   </div>
 </template>

@@ -1,6 +1,5 @@
 <template>
   <div class="overlay anim-backward fast">
-
     <!-- ##### TABLE TITLE -->
     <div class="grid">
       <div class="cell-12">
@@ -32,7 +31,7 @@
       <div class="grid-column-xs justify-center">
         <div @click="checkAnswer(response)" v-for="response in responses"
              class="cell-2 cell-3-m cell-4-s text-center padding shaded-box font-size-big cursor-pointer borders-2 borders-yang"
-             :class="[response.selected ? 'bg-turquoise color-yang' : 'hover-borders-turquoise']">
+             :class="responseColorBgColor(response)">
           {{response.value}}
         </div>
       </div>
@@ -47,11 +46,9 @@
           </p>
         </div>
         <div class="cell-12 text-center">
-          <button @click="getNextQuestion"
-                  class="button borders-0 bg-belize-hole color-yang hover-bg-peter-river font-size-medium"
-                  :disabled="!nextQuestion">
-            Next question
-          </button>
+          <timer v-on:timerOver="getNextQuestion" :time="5" :start="startTimer">
+            Next question in
+          </timer>
         </div>
       </div>
     </div>
@@ -117,29 +114,27 @@
   import shuffle from 'lodash/shuffle'
   import History from '../History'
   import { listColor } from './../staticColor'
+  import Timer from './timer/Timer'
 
   const NB_MAX_TURN = 10
   export default {
     name: 'tables',
     props: {
       table: Number
-
     },
+    components: {Timer},
     data () {
       return {
         turn: 1,
         score: 0,
         showResults: false,
-        nextQuestion: false,
         multiplicator: null,
         responses: [],
-        history: new History()
+        history: new History(),
+        startTimer: false
       }
     },
     computed: {
-      listColor () {
-        return listColor
-      },
       tableColor () {
         return listColor[this.table - 1]
       }
@@ -157,21 +152,20 @@
       getNextQuestion () {
         if (this.turn < NB_MAX_TURN) {
           this.turn++
-          this.nextQuestion = false
+          this.startTimer = false
           this.play()
         } else {
           this.showResults = true
         }
       },
       checkAnswer (response) {
-        this.selectAnswer(response)
-        if (!this.nextQuestion) {
+        if (!this.startTimer) {
+          response.selected = true
           this.history.addQuestionsAndAnswers(this.table, this.multiplicator, response)
           if (response.isCorrect) {
             this.score++
+            this.startTimer = true
           }
-          /* TODO : display the good and the bad answer if necessary */
-          this.nextQuestion = true
         }
       },
       setResponses () {
@@ -180,28 +174,24 @@
         this.responses.push({value: this.getResult() + this.table, isCorrect: false, selected: false})
         this.responses = shuffle(this.responses)
       },
-      selectAnswer (response) {
-        for (let response of this.responses) {
-          response.selected = false
-        }
-        response.selected = true
-      },
       getResult () {
         return this.table * this.multiplicator
       },
       getNextMultiplicator () {
         return Math.round((Math.random() * Math.floor(9))) + 1
+      },
+      responseColorBgColor (response) {
+        if (response.selected) {
+          if (response.isCorrect) {
+            return 'bg-emerald color-yang'
+          } else {
+            return 'bg-alizarin color-yang'
+          }
+        }
       }
-    }
-    ,
+    },
     mounted () {
       this.play()
-      /*  this.showResults = true
-        this.history.addQuestionsAndAnswers(this.table, 6, {value: 42, isCorrect: false, selected: false})
-        this.history.addQuestionsAndAnswers(this.table, 2, {value: 42, isCorrect: true, selected: false})
-        this.history.addQuestionsAndAnswers(this.table, 4, {value: 42, isCorrect: false, selected: false})
-        this.history.addQuestionsAndAnswers(this.table, 10, {value: 42, isCorrect: true, selected: false})
-        this.history.addQuestionsAndAnswers(this.table, 8, {value: 42, isCorrect: true, selected: false})*/
     }
   }
 </script>
