@@ -9,7 +9,8 @@
           <div class="cell-10">
             <p class="text-center-m font-size-medium">What is it ?</p>
             <p>
-              Here you can learn tables very easily. Choose one of the tables for which you want to train, and try to answer to 5 questions about this table.
+              Here you can learn tables very easily. Choose one of the tables for which you want to train, and try to
+              answer to 5 questions about this table.
             </p>
           </div>
         </div>
@@ -30,18 +31,17 @@
         </div>
       </div>
     </div>
-
-
   </div>
 </template>
-
 <script>
   import Test from '../Test'
   import { listColor } from '../../staticColor'
+  import { TEST_TYPE_EVALUATION, TEST_TYPE_LEARNING } from './../../const'
 
   export default {
-    name: 'LearningMode',
+    name: 'Choices',
     components: {Test},
+    props: {testType: {String}},
     computed: {
       listColor () {
         return listColor
@@ -49,6 +49,11 @@
     },
     data () {
       return {}
+    },
+    mounted () {
+      if (this.testType === TEST_TYPE_EVALUATION) {
+        this.$router.push({name: 'Test', params: {table: 10}})
+      }
     }
   }
 </script>

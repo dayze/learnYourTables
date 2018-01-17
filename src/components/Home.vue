@@ -12,7 +12,7 @@
     <!-- mode selection -->
     <div class="grid-column-xs text-center align-items-center align-items-stretch-xs">
 
-      <router-link :to="{ name: 'LearningMode'}"
+      <router-link :to="{ name: 'Choices', params: {testType: TEST_TYPE_LEARNING}}"
                    class="cell-4 cell-6-m hover-shaded-box cursor-pointer">
         <figure>
           <img
@@ -26,7 +26,7 @@
       </router-link>
 
 
-      <router-link :to="{ name: 'LearningMode'}"
+      <router-link :to="{ name: 'Choices', params: {testType: TEST_TYPE_EVALUATION}}"
                    class="cell-4 cell-6-m hover-shaded-box cursor-pointer">
         <figure>
           <img
@@ -40,7 +40,7 @@
       </router-link>
 
 
-      <router-link :to="{ name: 'LearningMode'}"
+      <router-link :to="{ name: 'Choices'}"
                    class="cell-4 cell-6-m hover-shaded-box cursor-pointer">
         <figure>
           <img
@@ -59,11 +59,15 @@
 </template>
 
 <script>
+  import { TEST_TYPE_EVALUATION, TEST_TYPE_LEARNING } from './../const'
 
   export default {
     name: 'Home',
     data () {
-      return {}
+      return {
+        TEST_TYPE_EVALUATION,
+        TEST_TYPE_LEARNING
+      }
     }
   }
 </script>

@@ -118,10 +118,12 @@
   import History from '../History'
   import { listColor } from './../staticColor'
 
+  const NB_MAX_TURN = 10
   export default {
     name: 'tables',
     props: {
       table: Number
+
     },
     data () {
       return {
@@ -153,7 +155,7 @@
         this.$router.go(-1)
       },
       getNextQuestion () {
-        if (this.turn < 5) {
+        if (this.turn < NB_MAX_TURN) {
           this.turn++
           this.nextQuestion = false
           this.play()
