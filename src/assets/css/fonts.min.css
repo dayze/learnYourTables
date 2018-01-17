@@ -4,6 +4,11 @@
 }
 
 @font-face {
+  font-family: ananda;
+  src: url('../font/ananda_2/AnandaBlackPersonalUse.ttf')
+}
+
+@font-face {
   font-family: huntress;
   src: url('../font/huntress.otf')
 }
@@ -16,6 +21,10 @@
 @font-face {
   font-family: stonb;
   src: url('../font/stoney_billy/STONB.ttf')
+}
+
+.APP_font_ananda {
+  font-family: ananda, sans-serif;
 }
 
 .APP_font_bebas {

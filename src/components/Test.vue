@@ -1,25 +1,22 @@
 <template>
-  <div class="overlay anim-backward">
-    <!-- TODO : SCORE GRID -->
-    <!-- <div class="grid">
-       <div class="cell-12 shaded-box text-right font-size-medium padding borders-bottom borders-silver">
-         <span class="margin-right">Your score</span>
-         <ul class="list-unstyled list-inline inline-block color-silver">
-           <li v-for="i in 5">
-             <span v-show="turn <= i">?</span>
-             <span v-if="!goodAnswer" class="color-alizarin">&#10007;</span>
-             &lt;!&ndash;<span class="color-emerald">&#10003;</span>&ndash;&gt;
-           </li>
-         </ul>
-       </div>
-     </div>-->
-    <!-- QUESTION GRID -->
+  <div class="overlay anim-backward fast">
+
+    <!-- ##### TABLE TITLE -->
+    <div class="grid">
+      <div class="cell-12">
+        <h1 :class="'borders-'+tableColor"
+            class="font-size-big font-size-normal-s bg-clouds padding borders-5-left margin-0 text-unstyled text-wide">
+          <span>Table </span><span :class="'coldor-'+tableColor">{{ table }}</span></h1>
+      </div>
+    </div>
+
+    <!-- ##### QUESTION TEST -->
     <div v-if="!showResults">
       <div class="grid justify-center">
         <div class="cell-12">
-          <h1 class="text-center-m">
-            <span class="color-turquoise font-weight-bold margin-right font-size-giant block-s">#{{ turn }}</span>
-            <span>What is the result of :</span>
+          <h1 class="text-center-m font-size-medium text-unstyled">
+            <span>Question N°</span>
+            <span class="color-turquoise">{{ turn }}</span>
           </h1>
         </div>
         <div class="cell-12 text-center font-size-giant">
@@ -34,8 +31,8 @@
       <!-- ANSWERS GRID -->
       <div class="grid-column-xs justify-center">
         <div @click="checkAnswer(response)" v-for="response in responses"
-             class="cell-2 cell-3-m cell-4-s text-center padding shaded-box font-size-big cursor-pointer
-              hover-color-turquoise" :class="[response.selected ? 'bg-emerald color-yang' : '']">
+             class="cell-2 cell-3-m cell-4-s text-center padding shaded-box font-size-big cursor-pointer borders-2 borders-yang"
+             :class="[response.selected ? 'bg-turquoise color-yang' : 'hover-borders-turquoise']">
           {{response.value}}
         </div>
       </div>
@@ -46,36 +43,80 @@
           <p class="margin-50-top text-center">
             <span class="color-turquoise font-weight-bold">?</span>
             <span class="font-weight-bold">Help</span>
-            <span>: You have to click on one of the three answers above.</span>
+            <span>: First you have to click on one of the three answers above and next click on the "next question" button below.</span>
           </p>
         </div>
         <div class="cell-12 text-center">
           <button @click="getNextQuestion"
-                  class="button borders-0 bg-emerald color-yang hover-bg-nephritis font-size-medium"
+                  class="button borders-0 bg-belize-hole color-yang hover-bg-peter-river font-size-medium"
                   :disabled="!nextQuestion">
             Next question
           </button>
         </div>
       </div>
     </div>
-    <div v-else>
-      <ul class="list-unstyled">
-        <template v-for="data in this.history.questionsAndAnswers">
-          <li>
-            <span :class="[data.isCorrect ? 'color-emerald' : 'color-alizarin']">
-              {{data.table}} x {{data.multiplicator}} = {{data.response}}
+
+
+    <!-- ##### CORRECTION SCORE -->
+    <div class="grid text-center overlay anim-backward" v-else>
+
+      <!-- SCORE -->
+      <div class="cell-12">
+        <h1 class="margin-0-bottom">Your score </h1>
+        <span class="font-size-big">{{ score }}/5</span>
+      </div>
+
+      <!-- END BUTTONS -->
+      <div class="cell-12">
+        <a @click.prevent="endPlay"
+           class="button block-s borders-0 bg-belize-hole hover-bg-peter-river color-yang margin-bottom-s"
+           title="To the homepage">
+          Choose an other one table
+        </a>
+        <router-link :to="{ name: 'Test', params: {table: table}}"
+                     class="button borders-0 bg-carrot hover-bg-orange color-yang block-s"
+                     :title="'Retry with the table '+ table">
+          <span>Retry</span>
+        </router-link>
+        <!--  <a @click.prevent="retry"
+             class="button block-s borders-0 bg-belize-hole hover-bg-peter-river color-yang margin-bottom-s"
+             :title="'Retry with the table'+table">
+            Retry
+          </a>-->
+        <router-view :key="$route.fullPath"></router-view>
+      </div>
+
+      <!-- CORRECTION -->
+      <div class="cell-12">
+        <ul class="list-unstyled font-size-normal padding-diffuser">
+          <li v-for="data in this.history.questionsAndAnswers" class="font-size-big">
+
+            <span v-if="!data.isCorrect" class="color-alizarin">&#10007;</span>
+            <span v-else class="color-emerald">&#10003;</span>
+
+            <span class="font-weight-bold color-turquoise">{{data.table}}</span>
+            <span>x </span>
+            <span class="font-weight-bold color-turquoise">{{ data.multiplicator}}</span>
+            <span>=</span>
+            <span
+              :class="[data.isCorrect ? 'color-emerald' : 'color-alizarin text-line-through']">{{data.response}}</span>
+            <span class="font-size-normal" v-if="!data.isCorrect">
+              The answer was <span class="font-weight-bold">{{ table * data.multiplicator }}</span>
             </span>
           </li>
-        </template>
-      </ul>
-      <button @click="endPlay">Fin</button>
+        </ul>
+      </div>
+
+
     </div>
+
   </div>
 </template>
 
 <script>
   import shuffle from 'lodash/shuffle'
   import History from '../History'
+  import { listColor } from './../staticColor'
 
   export default {
     name: 'tables',
@@ -91,6 +132,14 @@
         multiplicator: null,
         responses: [],
         history: new History()
+      }
+    },
+    computed: {
+      listColor () {
+        return listColor
+      },
+      tableColor () {
+        return listColor[this.table - 1]
       }
     },
     methods: {
@@ -129,10 +178,10 @@
         this.responses.push({value: this.getResult() + this.table, isCorrect: false, selected: false})
         this.responses = shuffle(this.responses)
       },
-       selectAnswer (response) {
-         for (let response of this.responses) {
-           response.selected = false
-         }
+      selectAnswer (response) {
+        for (let response of this.responses) {
+          response.selected = false
+        }
         response.selected = true
       },
       getResult () {
@@ -145,6 +194,12 @@
     ,
     mounted () {
       this.play()
+      /*  this.showResults = true
+        this.history.addQuestionsAndAnswers(this.table, 6, {value: 42, isCorrect: false, selected: false})
+        this.history.addQuestionsAndAnswers(this.table, 2, {value: 42, isCorrect: true, selected: false})
+        this.history.addQuestionsAndAnswers(this.table, 4, {value: 42, isCorrect: false, selected: false})
+        this.history.addQuestionsAndAnswers(this.table, 10, {value: 42, isCorrect: true, selected: false})
+        this.history.addQuestionsAndAnswers(this.table, 8, {value: 42, isCorrect: true, selected: false})*/
     }
   }
 </script>

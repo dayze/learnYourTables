@@ -5,6 +5,8 @@ import App from './App'
 import router from './router'
 import 'magic-monkey'
 import './assets/css/fonts.min.css'
+import './assets/css/layout/header.css'
+import './assets/css/common.css'
 
 Vue.config.productionTip = false
 
@@ -13,5 +15,5 @@ new Vue({
   el: '#app',
   router,
   template: '<App/>',
-  components: { App }
+  components: {App}
 })

@@ -9,8 +9,8 @@
 </template>
 
 <script>
-  import HeaderLayout from './components/Header.vue'
-  import FooterLayout from './components/Footer.vue'
+  import HeaderLayout from './components/layout/Header.vue'
+  import FooterLayout from './components/layout/Footer.vue'
 
   export default {
     name: 'app',
