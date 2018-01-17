@@ -1,47 +1,38 @@
 <template>
-  <div class="anim-forward overlay fast">
+  <div class="anim-forward overlay very-fast">
 
-    <div class="grid-column-reverse-s">
-      <div class="cell-12-no-gutters">
-        <!-- Welcome note -->
-
-        <div class="grid justify-center">
-          <div class="cell-10">
-            <p class="text-center-m font-size-medium">What is it ?</p>
-            <p>
-              Here you can learn tables very easily. Choose one of the tables for which you want to train, and try to answer to 5 questions about this table.
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="cell-12-no-gutters margin-30-bottom">
-        <!-- tables -->
-        <div class="grid justify-center-m">
-          <div class="cell-12">
-            <p class="text-center font-size-medium">Which table do you want to learn ?</p>
-          </div>
-          <router-link :key="index"
-                       :class="[index === 0 || index === 5 ? 'offset-1 offset-0-m' : '', 'bg-' + color + '-pronounced', 'hover-bg-' + color]"
-                       class="cell-2 cell-3-m cell-4-s cell-6-xs shaded-box text-center color-yang cursor-pointer hover-shaded-box padding"
-                       v-for="(color, index) in listColor"
-                       :to="{ name: 'Test', params: {table: index + 1}}">
-            <span class="font-size-jumbo">{{index + 1}}</span>
-          </router-link>
-        </div>
+    <div class="grid">
+      <div class="cell-12">
+        <h1 class="margin-50-bottom font-size-giant margin-0-top text-center">The Learning Mode</h1>
+        <h2 class="text-center margin-0-top size-medium wide uppercase weight-light">
+          Let's revise all tables !</h2>
       </div>
     </div>
 
 
+    <div class="grid-column-xs justify-center">
+      <div v-for="j in 10" v-if="j > 0" class="cell-3 cell-4-m cell-6-s bg-clouds">
+        <h2 :class="'bg-'+listColor[j-1]" class="margin-0 color-yang padding">Table {{ j }}</h2>
+        <ul class="list-unstyled padding-diffuser">
+          <li v-for="i in 10" class="font-size-medium">
+            <span class="font-weight-bold">{{j}}</span>
+            <span>x </span>
+            <span class="font-weight-bold">{{ i}}</span>
+            <span>=</span>
+            <span class="font-weight-bold color-turquoise">{{ j * i}}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-  import Test from '../Test'
+
   import { listColor } from '../../staticColor'
 
   export default {
     name: 'LearningMode',
-    components: {Test},
     computed: {
       listColor () {
         return listColor

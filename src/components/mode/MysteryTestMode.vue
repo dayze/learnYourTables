@@ -1,7 +1,7 @@
 <template>
-  <div class="anim-forward overlay fast">
+  <div class="anim-forward overlay very-fast">
 
-    Evaluation mode
+    Mystery mode
 
 
   </div>
@@ -10,7 +10,7 @@
 <script>
 
   export default {
-    name: 'EvaluationMode',
+    name: 'MysteryTestMode',
     data () {
       return {}
     }

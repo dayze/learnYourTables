@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
 import LearningMode from '@/components/mode/LearningMode'
-import EvaluationMode from '@/components/mode/EvaluationMode'
+import TestMode from '@/components/mode/TestMode'
+import MysteryTestMode from '@/components/mode/MysteryTestMode'
 import Test from '@/components/Test'
 
 Vue.use(Router)
@@ -20,9 +21,14 @@ export default new Router({
       component: LearningMode
     },
     {
-      path: '/evaluation-mode',
-      name: 'EvaluationMode',
-      component: EvaluationMode
+      path: '/test-mode',
+      name: 'TestMode',
+      component: TestMode
+    },
+    {
+      path: '/mystery-test-mode',
+      name: 'MysteryTestMode',
+      component: MysteryTestMode
     },
     {
       path: '/test',
