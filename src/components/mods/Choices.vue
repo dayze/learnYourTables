@@ -1,12 +1,6 @@
 <template>
   <div class="anim-forward overlay very-fast">
 
-    <div class="grid">
-      <div class="cell-12">
-        <h1 class="font-size-giant margin-0-top text-center">The Test Mode</h1>
-      </div>
-    </div>
-
     <div class="grid-column-reverse-s">
       <div class="cell-12-no-gutters">
         <!-- Welcome note -->
@@ -15,7 +9,8 @@
           <div class="cell-10">
             <p class="text-center-m font-size-medium">What is it ?</p>
             <p>
-              Here you can learn tables very easily. Choose one of the tables for which you want to train, and try to answer to 5 questions about this table.
+              Here you can learn tables very easily. Choose one of the tables for which you want to train, and try to
+              answer to 5 questions about this table.
             </p>
           </div>
         </div>
@@ -36,18 +31,19 @@
         </div>
       </div>
     </div>
-
-
   </div>
 </template>
-
 <script>
-  import Test from '../Test'
+
+
   import { listColor } from '../../staticColor'
+  import { TEST_TYPE_EVALUATION, TEST_TYPE_LEARNING } from './../../const'
+  import Test from '../Test.vue'
 
   export default {
-    name: 'TestMode',
+    name: 'Choices',
     components: {Test},
+    props: {testType: {String}},
     computed: {
       listColor () {
         return listColor
@@ -55,6 +51,11 @@
     },
     data () {
       return {}
+    },
+    mounted () {
+      if (this.testType === TEST_TYPE_EVALUATION) {
+        this.$router.push({name: 'Test', params: {table: 10}})
+      }
     }
   }
 </script>

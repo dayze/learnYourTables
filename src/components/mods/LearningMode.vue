@@ -1,5 +1,5 @@
 <template>
-  <div class="anim-forward overlay very-fast">
+  <div>
 
     <div class="grid">
       <div class="cell-12">
@@ -8,7 +8,6 @@
           Let's revise all tables !</h2>
       </div>
     </div>
-
 
     <div class="grid-column-xs justify-center">
       <div v-for="j in 10" v-if="j > 0" class="cell-3 cell-4-m cell-6-s bg-clouds">
@@ -25,21 +24,23 @@
       </div>
     </div>
   </div>
+
 </template>
 
 <script>
+
 
   import { listColor } from '../../staticColor'
 
   export default {
     name: 'LearningMode',
+    data () {
+      return {}
+    },
     computed: {
       listColor () {
         return listColor
       }
-    },
-    data () {
-      return {}
     }
   }
 </script>
