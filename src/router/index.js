@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
-import Choices from '@/components/mode/Choices'
+import LearningMode from '@/components/mods/LearningMode'
+import Choices from '@/components/mods/Choices'
 import Test from '@/components/Test'
 
 Vue.use(Router)
@@ -12,6 +13,11 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home
+    },
+    {
+      path: '/learning-mods',
+      name: 'LearningMode',
+      component: LearningMode
     },
     {
       path: '/choices',

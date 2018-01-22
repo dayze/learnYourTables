@@ -1,5 +1,5 @@
 <template>
-  <div class="anim-forward overlay fast">
+  <div class="anim-forward overlay very-fast">
 
     <div class="grid-column-reverse-s">
       <div class="cell-12-no-gutters">
@@ -34,9 +34,11 @@
   </div>
 </template>
 <script>
-  import Test from '../Test'
+
+
   import { listColor } from '../../staticColor'
   import { TEST_TYPE_EVALUATION, TEST_TYPE_LEARNING } from './../../const'
+  import Test from '../Test.vue'
 
   export default {
     name: 'Choices',
