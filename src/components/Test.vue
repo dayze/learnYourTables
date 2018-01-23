@@ -169,15 +169,20 @@
         }
       },
       setResponses () {
-        this.responses.push({value: this.getResult(), isCorrect: true, selected: false})
-        this.responses.push({value: this.getResult() - this.table, isCorrect: false, selected: false})
-        this.responses.push({value: this.getResult() + this.table, isCorrect: false, selected: false})
+        for (let i = 1; i <= 10; i++) {
+          let isCorrect = this.getResult() === this.getResult(i)
+          this.responses.push({value: this.getResult(i), isCorrect: isCorrect, selected: false})
+        }
         this.responses = shuffle(this.responses)
       },
-      getResult () {
-        return this.table * this.multiplicator
+      getResult (pMultiplicator = null) {
+        if (pMultiplicator === null) {
+          return this.table * this.multiplicator
+        }
+        return this.table * pMultiplicator
       },
       getNextMultiplicator () {
+        /* TODO : cancel doublons */
         return Math.round((Math.random() * Math.floor(9))) + 1
       },
       responseColorBgColor (response) {

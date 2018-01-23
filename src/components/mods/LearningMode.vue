@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="overlay anim-forward very-fast">
 
     <div class="grid">
       <div class="cell-12">
