@@ -13,11 +13,14 @@
     <div v-if="!showResults">
       <div class="grid justify-center">
         <div class="cell-12">
-          <h1 class="text-center-m font-size-medium text-unstyled">
+          <h1 class="text-center-m font-size-medium text-unstyled margin-0-bottom">
             <span>Question N°</span>
             <span class="color-turquoise">{{ turn }}</span>
           </h1>
         </div>
+        <timer class="cell-12" v-on:timerOver="getNextQuestion" :time="5" :start="startTimer">
+          Next question in
+        </timer>
         <div class="cell-12 text-center font-size-giant">
           <span class="font-weight-bold color-turquoise">{{table}}</span>
           <span>x </span>
@@ -38,17 +41,10 @@
 
       <!-- HELP & NEXT BUTTON GRID -->
       <div class="grid">
-        <div class="cell-12">
-          <p class="margin-50-top text-center">
-            <span class="color-turquoise font-weight-bold">?</span>
-            <span class="font-weight-bold">Help</span>
-            <span>: First you have to click on one of the three answers above and next click on the "next question" button below.</span>
-          </p>
-        </div>
         <div class="cell-12 text-center">
-          <timer v-on:timerOver="getNextQuestion" :time="5" :start="startTimer">
+          <!--<timer v-on:timerOver="getNextQuestion" :time="5" :start="startTimer">
             Next question in
-          </timer>
+          </timer>-->
         </div>
       </div>
     </div>
@@ -60,7 +56,7 @@
       <!-- SCORE -->
       <div class="cell-12">
         <h1 class="margin-0-bottom">Your score </h1>
-        <span class="font-size-big">{{ score }}/5</span>
+        <span class="font-size-big">{{ score }}/ {{ nbMaxTurn }}</span>
       </div>
 
       <!-- END BUTTONS -->
@@ -117,7 +113,7 @@
   import { listColor } from './../staticColor'
   import Timer from './timer/Timer'
 
-  const NB_MAX_TURN = 1
+  const NB_MAX_TURN = 2
   export default {
     name: 'tables',
     props: {
@@ -126,6 +122,7 @@
     components: {Timer},
     data () {
       return {
+        nbMaxTurn: 10,
         turn: 1,
         score: 0,
         showResults: false,
@@ -134,7 +131,8 @@
         history: new History(),
         timesSpend : [],
         timeSpend : null,
-        startTimer: false
+        startTimer: false,
+        availableMultiplicators: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
       }
     },
     computed: {
@@ -155,7 +153,7 @@
         this.$router.go(-1)
       },
       getNextQuestion () {
-        if (this.turn < NB_MAX_TURN) {
+        if (this.turn < this.nbMaxTurn) {
           this.timeSpend.endWatch()
           this.turn++
           this.startTimer = false
@@ -189,8 +187,11 @@
         return this.table * pMultiplicator
       },
       getNextMultiplicator () {
-        /* TODO : cancel doublons */
-        return Math.round((Math.random() * Math.floor(9))) + 1
+        console.log(Math.random() * this.availableMultiplicators.length)
+        let randomPick = Math.floor(Math.random() * this.availableMultiplicators.length)
+        let multiplicator = this.availableMultiplicators[randomPick]
+        this.availableMultiplicators.splice(randomPick, 1)
+        return multiplicator
       },
       responseColorBgColor (response) {
         if (response.selected) {
