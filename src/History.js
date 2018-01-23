@@ -4,8 +4,8 @@ class History {
     this.date = new Date()
   }
 
-  addQuestionsAndAnswers (table, multiplicator, {value, isCorrect}) {
-    this.questionsAndAnswers.push({table, multiplicator, response: value, isCorrect})
+  addQuestionsAndAnswers (table, multiplicator, {value, isCorrect}, timeSpend) {
+    this.questionsAndAnswers.push({table, multiplicator, response: value, isCorrect}, timeSpend)
   }
   gameEnd () {
     window.localStorage.setItem('' + this.date.getTime(), JSON.stringify(this))

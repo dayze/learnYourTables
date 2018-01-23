@@ -113,10 +113,11 @@
 <script>
   import shuffle from 'lodash/shuffle'
   import History from '../History'
+  import Ts from '../TimeSpend'
   import { listColor } from './../staticColor'
   import Timer from './timer/Timer'
 
-  const NB_MAX_TURN = 10
+  const NB_MAX_TURN = 1
   export default {
     name: 'tables',
     props: {
@@ -131,6 +132,8 @@
         multiplicator: null,
         responses: [],
         history: new History(),
+        timesSpend : [],
+        timeSpend : null,
         startTimer: false
       }
     },
@@ -141,6 +144,8 @@
     },
     methods: {
       play () {
+        this.timeSpend = new Ts()
+        this.timesSpend.push(this.timeSpend)
         this.responses = []
         this.multiplicator = this.getNextMultiplicator()
         this.setResponses()
@@ -151,17 +156,19 @@
       },
       getNextQuestion () {
         if (this.turn < NB_MAX_TURN) {
+          this.timeSpend.endWatch()
           this.turn++
           this.startTimer = false
           this.play()
         } else {
+          console.log('showresult')
           this.showResults = true
         }
       },
       checkAnswer (response) {
         if (!this.startTimer) {
           response.selected = true
-          this.history.addQuestionsAndAnswers(this.table, this.multiplicator, response)
+          this.history.addQuestionsAndAnswers(this.table, this.multiplicator, response, this.timeSpend.getTimeSpend())
           if (response.isCorrect) {
             this.score++
             this.startTimer = true
