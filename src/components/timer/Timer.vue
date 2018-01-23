@@ -13,10 +13,16 @@
         data: this.time
       }
     },
+    methods: {
+      resetTimer () {
+        this.data = this.time
+      }
+    },
     watch: {
       data () {
         if (this.data === 0) {
           this.$emit('timerOver')
+          this.resetTimer()
         }
       }
     },
