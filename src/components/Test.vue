@@ -106,6 +106,7 @@
 <script>
   import shuffle from 'lodash/shuffle'
   import History from '../History'
+  import Ts from '../TimeSpend'
   import { listColor } from './../staticColor'
   import Timer from './timer/Timer'
 
@@ -117,13 +118,15 @@
     components: {Timer},
     data () {
       return {
-        nbMaxTurn: 10,
+        nbMaxTurn: 2, // set to 2 for test purposes
         turn: 1,
         score: 0,
         showResults: false,
         multiplicator: null,
         responses: [],
         history: new History(),
+        timesSpend : [],
+        timeSpend : null,
         startTimer: false,
         availableMultiplicators: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
       }
@@ -135,12 +138,13 @@
     },
     methods: {
       play () {
+        this.timeSpend = new Ts()
+        this.timesSpend.push(this.timeSpend)
         this.responses = []
         this.multiplicator = this.getNextMultiplicator()
         this.setResponses()
       },
       endPlay () {
-        this.history.gameEnd()
         this.$router.go(-1)
       },
       getNextQuestion () {
@@ -150,16 +154,18 @@
           this.play()
         } else {
           this.showResults = true
+          this.history.gameEnd()
         }
       },
       checkAnswer (response) {
         if (!this.startTimer) {
           response.selected = true
-          this.history.addQuestionsAndAnswers(this.table, this.multiplicator, response)
           if (response.isCorrect) {
+            this.timeSpend.endWatch()
             this.score++
             this.startTimer = true
           }
+          this.history.addQuestionsAndAnswers(this.table, this.multiplicator, response, this.timeSpend.getTimeSpend())
         }
       },
       setResponses () {
