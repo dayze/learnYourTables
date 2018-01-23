@@ -14,13 +14,16 @@
       <div class="grid justify-center">
         <div class="cell-12">
           <h1 class="text-center-m font-size-medium text-unstyled margin-0-bottom">
+            <span v-if="!startTimer" class="overlay inline-block anim-forward very-fast">
             <span>Question N°</span>
             <span class="color-turquoise">{{ turn }}</span>
+            </span>
+            <timer class="inline-block overlay anim-backward very-fast" v-on:timerOver="getNextQuestion" :time="5"
+                   :start="startTimer">
+              Next question in
+            </timer>
           </h1>
         </div>
-        <timer class="cell-12" v-on:timerOver="getNextQuestion" :time="5" :start="startTimer">
-          Next question in
-        </timer>
         <div class="cell-12 text-center font-size-giant">
           <span class="font-weight-bold color-turquoise">{{table}}</span>
           <span>x </span>
@@ -31,22 +34,16 @@
       </div>
 
       <!-- ANSWERS GRID -->
-      <div class="grid-column-xs justify-center">
-        <div @click="checkAnswer(response)" v-for="response in responses"
-             class="cell-2 cell-3-m cell-4-s text-center padding shaded-box font-size-big cursor-pointer borders-2 borders-yang"
-             :class="responseColorBgColor(response)">
+      <div class="grid justify-center-m">
+
+        <div @click="checkAnswer(response)" v-for="(response, index) in responses"
+             class="cell-2 cell-3-m cell-4-s cell-6-xs text-center padding shaded-box font-size-big cursor-pointer borders-2 borders-yang"
+             :class="[index === 0 || index === 5 ? 'offset-1 offset-0-m' : '', responseColorBgColor(response)]">
           {{response.value}}
         </div>
       </div>
 
-      <!-- HELP & NEXT BUTTON GRID -->
-      <div class="grid">
-        <div class="cell-12 text-center">
-          <!--<timer v-on:timerOver="getNextQuestion" :time="5" :start="startTimer">
-            Next question in
-          </timer>-->
-        </div>
-      </div>
+
     </div>
 
 
