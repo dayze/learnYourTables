@@ -13,17 +13,16 @@ class TimeSpend {
     this.end = new Date()
   }
 
-  diffByMinutes (dt2, dt1) {
+  diffBySeconds (dt2, dt1) {
 
     let diff = (dt2.getTime() - dt1.getTime()) / 1000
-    diff /= 60
     return Math.abs(Math.round(diff))
 
   }
 
   getTimeSpend () {
     if (this.end != null) {
-      return this.diffByMinutes(this.begin, this.end)
+      return this.diffBySeconds(this.begin, this.end)
     } else {
       return null
     }

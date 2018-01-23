@@ -113,7 +113,6 @@
   import { listColor } from './../staticColor'
   import Timer from './timer/Timer'
 
-  const NB_MAX_TURN = 2
   export default {
     name: 'tables',
     props: {
@@ -122,7 +121,7 @@
     components: {Timer},
     data () {
       return {
-        nbMaxTurn: 10,
+        nbMaxTurn: 2, // set to 2 for test purposes
         turn: 1,
         score: 0,
         showResults: false,
@@ -149,28 +148,27 @@
         this.setResponses()
       },
       endPlay () {
-        this.history.gameEnd()
         this.$router.go(-1)
       },
       getNextQuestion () {
         if (this.turn < this.nbMaxTurn) {
-          this.timeSpend.endWatch()
           this.turn++
           this.startTimer = false
           this.play()
         } else {
-          console.log('showresult')
           this.showResults = true
+          this.history.gameEnd()
         }
       },
       checkAnswer (response) {
         if (!this.startTimer) {
           response.selected = true
-          this.history.addQuestionsAndAnswers(this.table, this.multiplicator, response, this.timeSpend.getTimeSpend())
           if (response.isCorrect) {
+            this.timeSpend.endWatch()
             this.score++
             this.startTimer = true
           }
+          this.history.addQuestionsAndAnswers(this.table, this.multiplicator, response, this.timeSpend.getTimeSpend())
         }
       },
       setResponses () {
