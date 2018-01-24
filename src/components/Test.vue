@@ -18,7 +18,7 @@
             <span>Question N°</span>
             <span class="color-turquoise">{{ turn }}</span>
             </span>
-            <timer class="inline-block overlay anim-backward very-fast" v-on:timerOver="getNextQuestion" :time="5"
+            <timer class="inline-block overlay anim-backward very-fast" v-on:timerOver="getNextQuestion" :time="2"
                    :start="startTimer">
               Next question in
             </timer>
@@ -48,53 +48,54 @@
 
 
     <!-- ##### CORRECTION SCORE -->
-    <div class="grid text-center overlay anim-backward very-fast" v-else>
+    <div class="grid overlay anim-backward very-fast text-center" v-else>
 
       <!-- SCORE -->
-      <div class="cell-12">
-        <h1 class="margin-0-bottom">Your score </h1>
-        <span class="font-size-big">{{ score }} / {{ nbMaxTurn }}</span>
+      <div class="cell-12 text-center">
+        <h1 class="margin-0-bottom">Résultats</h1>
+        <span class="font-size-medium">Total of {{history.getTotalErrors()}} error(s)</span>
       </div>
 
       <!-- END BUTTONS -->
       <div class="cell-12">
         <a @click.prevent="endPlay"
            class="button block-s borders-0 bg-belize-hole hover-bg-peter-river color-yang margin-bottom-s"
-           title="To the homepage">
+           title="Select an other one table">
           Choose an other one table
         </a>
+
         <router-link :to="{ name: 'Test', params: {table: table}}"
                      class="button borders-0 bg-carrot hover-bg-orange color-yang block-s"
                      :title="'Retry with the table '+ table">
           <span>Retry</span>
         </router-link>
-        <!--  <a @click.prevent="retry"
-             class="button block-s borders-0 bg-belize-hole hover-bg-peter-river color-yang margin-bottom-s"
-             :title="'Retry with the table'+table">
-            Retry
-          </a>-->
-        <router-view :key="$route.fullPath"></router-view>
       </div>
 
       <!-- CORRECTION -->
       <div class="cell-12">
         <ul class="list-unstyled font-size-normal padding-diffuser">
-          <!-- <li v-for="data in this.groupByMultiplicator" class="font-size-big">
-             <span v-if="!data.isCorrect" class="color-alizarin">&#10007;</span>
-             <span v-else class="color-emerald">&#10003;</span>
+          <li v-for="(question, index) in this.history.questions">
+            <h2 class="margin-0-bottom">Question N° {{index}}</h2>
+            <ul class="list-unstyled padding">
+              <li>
+                <span class="font-weight-bold">Spend time :</span>
+                <span>{{ question.timeSpend }} seconds</span>
+              </li>
+              <li>
+                You made {{question.responses.length - 1 }} error(s)
+              </li>
+              <li v-for="response in question.responses">
+                <span v-if="!response.isCorrect" class="color-alizarin">&#10007;</span>
+                <span v-else class="color-emerald">&#10003;</span>
 
-             <span class="font-weight-bold color-turquoise">{{data.table}}</span>
-             <span>x </span>
-             <span class="font-weight-bold color-turquoise">{{ data.multiplicator}}</span>
-             <span>=</span>
-             <span
-               :class="[data.isCorrect ? 'color-emerald' : 'color-alizarin text-line-through']">{{data.response}}</span>
-             <span class="font-size-normal" v-if="!data.isCorrect">
-                 The answer was <span class="font-weight-bold">{{ table * data.multiplicator }}</span>
-               </span>
-           </li>-->
-          <li v-for="question in this.history.questions" class="font-size-big">
-            {{ question.multiplicator }}
+                <span class="font-weight-bold color-turquoise">{{ history.table}}</span>
+                <span>x </span>
+                <span class="font-weight-bold color-turquoise">{{ question.multiplicator}}</span>
+                <span>=</span>
+                <span
+                  :class="[response.isCorrect ? 'color-emerald' : 'color-alizarin text-line-through']">{{response.value}}</span>
+              </li>
+            </ul>
           </li>
         </ul>
       </div>
@@ -107,7 +108,6 @@
 
 <script>
   import shuffle from 'lodash/shuffle'
-  import groupBy from 'lodash/groupBy'
   import History from '../History'
   import Question from '../Question'
   import Ts from '../TimeSpend'
@@ -129,7 +129,7 @@
         multiplicator: null,
         responses: [],
         history: new History(this.table),
-        question: new Question(),
+        currentQuestion: new Question(),
         timesSpend: [],
         timeSpend: null,
         startTimer: false,
@@ -143,7 +143,7 @@
     },
     methods: {
       play () {
-        this.question = new Question()
+        this.currentQuestion = new Question()
         this.timeSpend = new Ts()
         this.timesSpend.push(this.timeSpend)
         this.responses = []
@@ -170,16 +170,13 @@
             this.timeSpend.endWatch()
             this.score++
             this.startTimer = true
+            this.currentQuestion.timeSpend = this.timeSpend.getTimeSpend()
           }
-          // TODO : change history constrcutor
-          //this.history.addQuestionsAndAnswers(this.table, this.multiplicator, response, this.timeSpend.getTimeSpend())
-
-          this.question.addResponse(response)
-          if (!this.question.isAlreadyFill) {
-            this.question.multiplicator = this.multiplicator
-            this.question.timeSpend = this.timeSpend.getTimeSpend()
-            this.question.isAlreadyFill = true
-            this.history.addQuestion(this.question)
+          this.currentQuestion.addResponse(response)
+          if (!this.currentQuestion.isAlreadyFill) {
+            this.currentQuestion.multiplicator = this.multiplicator
+            this.currentQuestion.isAlreadyFill = true
+            this.history.addQuestion(this.currentQuestion)
           }
         }
       },
@@ -214,20 +211,6 @@
     },
     mounted () {
       this.play()
-      /* @@@@@@ DUMP FEATURES @@@@@@ */
-
-      /* for (let i = 1; i <= 10; i++) {
-         let question = new Question()
-         question.addResponse(this.getResult(i), false)
-         question.addResponse(this.getResult(i), false)
-         question.addResponse(this.getResult(i), true)
-         question.multiplicator = this.multiplicator
-         question.timeSpend = this.timeSpend.getTimeSpend()
-         question.alreadyFill = true
-         this.history.addQuestion(question)
-       }
-       console.log(this.history.questions)*/
-      /* @@@@@@ END DUMP FEATURES @@@@@@ */
     }
   }
 </script>

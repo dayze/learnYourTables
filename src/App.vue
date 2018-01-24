@@ -2,7 +2,7 @@
   <div id="app">
     <header-layout></header-layout>
     <main class="container margin-50-top-bottom">
-      <router-view/>
+      <router-view :key="$route.fullPath"></router-view>
     </main>
     <footer-layout></footer-layout>
   </div>

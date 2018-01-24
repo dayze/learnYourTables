@@ -11,8 +11,6 @@ class Question {
     this.responses.push(response)
   }
 
-
-
 }
 
 export default Question
