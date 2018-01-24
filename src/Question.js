@@ -7,8 +7,8 @@ class Question {
     this.timeSpend = null
   }
 
-  addResponse (value, isCorrect) {
-    this.responses.push({value, isCorrect})
+  addResponse (response) {
+    this.responses.push(response)
   }
 
 
