@@ -1,12 +1,15 @@
 class History {
-  constructor () {
-    this.questionsAndAnswers = []
+
+  constructor (table) {
+    this.table = table
+    this.questions = []
     this.date = new Date()
   }
 
-  addQuestionsAndAnswers (table, multiplicator, {value, isCorrect}, timeSpend) {
-    this.questionsAndAnswers.push({table, multiplicator, response: value, isCorrect, timeSpend})
+  addQuestion (question) {
+    this.questions.push(question)
   }
+
   gameEnd () {
     console.log(this)
     window.localStorage.setItem('' + this.date.getTime(), JSON.stringify(this))

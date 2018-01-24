@@ -48,12 +48,12 @@
 
 
     <!-- ##### CORRECTION SCORE -->
-    <div class="grid text-center overlay anim-backward" v-else>
+    <div class="grid text-center overlay anim-backward very-fast" v-else>
 
       <!-- SCORE -->
       <div class="cell-12">
         <h1 class="margin-0-bottom">Your score </h1>
-        <span class="font-size-big">{{ score }}/ {{ nbMaxTurn }}</span>
+        <span class="font-size-big">{{ score }} / {{ nbMaxTurn }}</span>
       </div>
 
       <!-- END BUTTONS -->
@@ -79,20 +79,22 @@
       <!-- CORRECTION -->
       <div class="cell-12">
         <ul class="list-unstyled font-size-normal padding-diffuser">
-          <li v-for="data in this.history.questionsAndAnswers" class="font-size-big">
+          <!-- <li v-for="data in this.groupByMultiplicator" class="font-size-big">
+             <span v-if="!data.isCorrect" class="color-alizarin">&#10007;</span>
+             <span v-else class="color-emerald">&#10003;</span>
 
-            <span v-if="!data.isCorrect" class="color-alizarin">&#10007;</span>
-            <span v-else class="color-emerald">&#10003;</span>
-
-            <span class="font-weight-bold color-turquoise">{{data.table}}</span>
-            <span>x </span>
-            <span class="font-weight-bold color-turquoise">{{ data.multiplicator}}</span>
-            <span>=</span>
-            <span
-              :class="[data.isCorrect ? 'color-emerald' : 'color-alizarin text-line-through']">{{data.response}}</span>
-            <span class="font-size-normal" v-if="!data.isCorrect">
-              The answer was <span class="font-weight-bold">{{ table * data.multiplicator }}</span>
-            </span>
+             <span class="font-weight-bold color-turquoise">{{data.table}}</span>
+             <span>x </span>
+             <span class="font-weight-bold color-turquoise">{{ data.multiplicator}}</span>
+             <span>=</span>
+             <span
+               :class="[data.isCorrect ? 'color-emerald' : 'color-alizarin text-line-through']">{{data.response}}</span>
+             <span class="font-size-normal" v-if="!data.isCorrect">
+                 The answer was <span class="font-weight-bold">{{ table * data.multiplicator }}</span>
+               </span>
+           </li>-->
+          <li v-for="question in this.history.questions" class="font-size-big">
+            {{ question.multiplicator }}
           </li>
         </ul>
       </div>
@@ -105,7 +107,9 @@
 
 <script>
   import shuffle from 'lodash/shuffle'
+  import groupBy from 'lodash/groupBy'
   import History from '../History'
+  import Question from '../Question'
   import Ts from '../TimeSpend'
   import { listColor } from './../staticColor'
   import Timer from './timer/Timer'
@@ -124,9 +128,10 @@
         showResults: false,
         multiplicator: null,
         responses: [],
-        history: new History(),
-        timesSpend : [],
-        timeSpend : null,
+        history: new History(this.table),
+        question: new Question(),
+        timesSpend: [],
+        timeSpend: null,
         startTimer: false,
         availableMultiplicators: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
       }
@@ -138,6 +143,7 @@
     },
     methods: {
       play () {
+        this.question = new Question()
         this.timeSpend = new Ts()
         this.timesSpend.push(this.timeSpend)
         this.responses = []
@@ -165,7 +171,16 @@
             this.score++
             this.startTimer = true
           }
-          this.history.addQuestionsAndAnswers(this.table, this.multiplicator, response, this.timeSpend.getTimeSpend())
+          // TODO : change history constrcutor
+          //this.history.addQuestionsAndAnswers(this.table, this.multiplicator, response, this.timeSpend.getTimeSpend())
+
+          this.question.addResponse(response)
+          if (!this.question.isAlreadyFill) {
+            this.question.multiplicator = this.multiplicator
+            this.question.timeSpend = this.timeSpend.getTimeSpend()
+            this.question.isAlreadyFill = true
+            this.history.addQuestion(this.question)
+          }
         }
       },
       setResponses () {
@@ -182,7 +197,6 @@
         return this.table * pMultiplicator
       },
       getNextMultiplicator () {
-        console.log(Math.random() * this.availableMultiplicators.length)
         let randomPick = Math.floor(Math.random() * this.availableMultiplicators.length)
         let multiplicator = this.availableMultiplicators[randomPick]
         this.availableMultiplicators.splice(randomPick, 1)
@@ -200,6 +214,20 @@
     },
     mounted () {
       this.play()
+      /* @@@@@@ DUMP FEATURES @@@@@@ */
+
+      /* for (let i = 1; i <= 10; i++) {
+         let question = new Question()
+         question.addResponse(this.getResult(i), false)
+         question.addResponse(this.getResult(i), false)
+         question.addResponse(this.getResult(i), true)
+         question.multiplicator = this.multiplicator
+         question.timeSpend = this.timeSpend.getTimeSpend()
+         question.alreadyFill = true
+         this.history.addQuestion(question)
+       }
+       console.log(this.history.questions)*/
+      /* @@@@@@ END DUMP FEATURES @@@@@@ */
     }
   }
 </script>
