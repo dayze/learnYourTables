@@ -1,16 +1,26 @@
 <template>
   <div class="overlay anim-backward fast">
-    <!-- ##### TABLE TITLE -->
+
+
     <div class="grid">
       <div class="cell-12">
-        <h1 :class="'borders-'+tableColor"
-            class="font-size-big font-size-normal-s bg-clouds padding borders-5-left margin-0 text-unstyled text-wide">
-          <span>Table </span><span :class="'coldor-'+tableColor">{{ table }}</span></h1>
+        <h1 class="margin-50-bottom font-size-giant margin-0-top text-center">
+          <span v-if="evaluationMode">The Evaluation Mode</span>
+          <span v-if="!evaluationMode">The Test Mode</span>
+        </h1>
       </div>
     </div>
 
     <!-- ##### QUESTION TEST -->
     <div v-if="!showResults">
+      <!-- ##### TABLE TITLE -->
+      <div class="grid">
+        <div class="cell-12">
+          <h1 :class="'borders-'+tableColor"
+              class="font-size-big font-size-normal-s bg-clouds padding borders-5-left margin-0 text-unstyled text-wide">
+            <span>Table </span><span :class="'coldor-'+tableColor">{{ currentTable }}</span></h1>
+        </div>
+      </div>
       <div class="grid justify-center">
         <div class="cell-12">
           <h1 class="text-center-m font-size-medium text-unstyled margin-0-bottom">
@@ -25,7 +35,7 @@
           </h1>
         </div>
         <div class="cell-12 text-center font-size-giant">
-          <span class="font-weight-bold color-turquoise">{{table}}</span>
+          <span class="font-weight-bold color-turquoise">{{ currentTable }}</span>
           <span>x </span>
           <span class="font-weight-bold color-turquoise">{{ multiplicator}}</span>
           <span>=</span>
@@ -57,18 +67,18 @@
       </div>
 
       <!-- END BUTTONS -->
-      <div class="cell-12">
+      <div v-if="!evaluationMode" class="cell-12">
         <a @click.prevent="endPlay"
            class="button block-s borders-0 bg-belize-hole hover-bg-peter-river color-yang margin-bottom-s"
            title="Select an other one table">
           Choose an other one table
         </a>
-
-        <router-link :to="{ name: 'Test', params: {table: table}}"
-                     class="button borders-0 bg-carrot hover-bg-orange color-yang block-s"
-                     :title="'Retry with the table '+ table" replace>
-          <span>Retry</span>
-        </router-link>
+        <!--
+                <router-link :to="{ name: 'Test', params: {table: currentTable}}"
+                             class="button borders-0 bg-carrot hover-bg-orange color-yang block-s"
+                             :title="'Retry with the table '+ currentTable" replace>
+                  <span>Retry</span>
+                </router-link>-->
       </div>
 
       <!-- CORRECTION -->
@@ -122,6 +132,7 @@
     components: {Timer},
     data () {
       return {
+        currentTable: this.table,
         evaluationMode: false,
         nbMaxTurn: 2, // set to 2 for test purposes
         turn: 1,
@@ -130,7 +141,7 @@
         multiplicator: null,
         responses: [],
         history: new History(),
-        currentQuestion: new Question(this.table),
+        currentQuestion: new Question(this.currentTable),
         timesSpend: [],
         timeSpend: null,
         startTimer: false,
@@ -139,31 +150,29 @@
     },
     computed: {
       tableColor () {
-        return listColor[this.table - 1]
+        return listColor[this.currentTable - 1]
       }
     },
     methods: {
       play () {
         if (this.evaluationMode) {
-          /* TODO : random table */
-          //this.table =
+          this.currentTable = this.getRandomTable()
         }
-        this.currentQuestion = new Question(this.table)
+        this.currentQuestion = new Question(this.currentTable)
         this.timeSpend = new Ts()
         this.timesSpend.push(this.timeSpend)
         this.responses = []
         this.multiplicator = this.getNextMultiplicator()
         this.setResponses()
       },
+      getRandomTable () {
+        return Math.floor(Math.random() * 10) + 1
+      },
       endPlay () {
         this.$router.go(-1)
       },
       getNextQuestion () {
         if (this.turn < this.nbMaxTurn) {
-          /* TODO : random table */
-          if (this.evaluationMode) {
-            // this.table =
-          }
           this.turn++
           this.startTimer = false
           this.play()
@@ -173,7 +182,6 @@
         }
       },
       checkAnswer (response) {
-        /* TODO :  */
         if (!this.startTimer) {
           response.selected = true
           if (response.isCorrect) {
@@ -182,18 +190,15 @@
             this.startTimer = true
             this.currentQuestion.timeSpend = this.timeSpend.getTimeSpend()
           }
-
           this.currentQuestion.addResponse(response)
           if (!this.currentQuestion.isAlreadyFill) {
             this.currentQuestion.multiplicator = this.multiplicator
             this.currentQuestion.isAlreadyFill = true
             this.history.addQuestion(this.currentQuestion)
           }
-
         }
       },
       setResponses () {
-        /* TODO : */
         for (let i = 1; i <= 10; i++) {
           let isCorrect = this.getResult() === this.getResult(i)
           this.responses.push({value: this.getResult(i), isCorrect: isCorrect, selected: false})
@@ -202,11 +207,14 @@
       },
       getResult (pMultiplicator = null) {
         if (pMultiplicator === null) {
-          return this.table * this.multiplicator
+          return this.currentTable * this.multiplicator
         }
-        return this.table * pMultiplicator
+        return this.currentTable * pMultiplicator
       },
       getNextMultiplicator () {
+        if (this.evaluationMode) {
+          return Math.floor(Math.random() * 10) + 1
+        }
         let randomPick = Math.floor(Math.random() * this.availableMultiplicators.length)
         let multiplicator = this.availableMultiplicators[randomPick]
         this.availableMultiplicators.splice(randomPick, 1)
