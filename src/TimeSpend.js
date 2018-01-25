@@ -21,6 +21,7 @@ class TimeSpend {
   }
 
   getTimeSpend () {
+    console.log(this.end)
     if (this.end != null) {
       return this.diffBySeconds(this.begin, this.end)
     } else {
