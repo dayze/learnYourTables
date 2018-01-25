@@ -144,7 +144,7 @@
     },
     methods: {
       play () {
-        if(this.evaluationMode){
+        if (this.evaluationMode) {
           /* TODO : random table */
           //this.table =
         }
@@ -161,7 +161,7 @@
       getNextQuestion () {
         if (this.turn < this.nbMaxTurn) {
           /* TODO : random table */
-          if(this.evaluationMode){
+          if (this.evaluationMode) {
             // this.table =
           }
           this.turn++
@@ -183,14 +183,12 @@
             this.currentQuestion.timeSpend = this.timeSpend.getTimeSpend()
           }
 
-
           this.currentQuestion.addResponse(response)
           if (!this.currentQuestion.isAlreadyFill) {
             this.currentQuestion.multiplicator = this.multiplicator
             this.currentQuestion.isAlreadyFill = true
             this.history.addQuestion(this.currentQuestion)
           }
-
 
         }
       },
