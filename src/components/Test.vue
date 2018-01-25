@@ -88,7 +88,7 @@
                 <span v-if="!response.isCorrect" class="color-alizarin">&#10007;</span>
                 <span v-else class="color-emerald">&#10003;</span>
 
-                <span class="font-weight-bold color-turquoise">{{ question.table}}</span>
+                <span class="font-weight-bold color-turquoise">{{ question.table }}</span>
                 <span>x </span>
                 <span class="font-weight-bold color-turquoise">{{ question.multiplicator}}</span>
                 <span>=</span>
@@ -148,7 +148,7 @@
           /* TODO : random table */
           //this.table =
         }
-        this.currentQuestion = new Question()
+        this.currentQuestion = new Question(this.table)
         this.timeSpend = new Ts()
         this.timesSpend.push(this.timeSpend)
         this.responses = []
