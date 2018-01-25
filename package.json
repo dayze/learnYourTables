@@ -10,6 +10,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "animate.css": "^3.5.2",
     "lodash": "^4.17.4",
     "magic-monkey": "^2.0.4",
     "vue": "^2.5.2",

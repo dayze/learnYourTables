@@ -4,7 +4,7 @@ import Home from '@/components/Home'
 import LearningMode from '@/components/mods/LearningMode'
 import Choices from '@/components/mods/Choices'
 import Test from '@/components/Test'
-
+import Dashboard from '@/components/Dashboard'
 Vue.use(Router)
 
 export default new Router({
@@ -30,7 +30,12 @@ export default new Router({
       name: 'Test',
       component: Test,
       props: true
+    },
+    {
+      path: '/dashboard',
+      name: 'Dashboard',
+      component: Dashboard,
+      props: false
     }
-
   ]
 })
