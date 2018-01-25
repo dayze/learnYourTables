@@ -1,6 +1,7 @@
 class Question {
 
-  constructor () {
+  constructor (table) {
+    this.table = table;
     this.isAlreadyFill = false
     this.multiplicator = null
     this.responses = []

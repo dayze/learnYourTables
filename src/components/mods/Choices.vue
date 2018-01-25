@@ -55,7 +55,7 @@
     mounted () {
       if (this.testType === TEST_TYPE_EVALUATION) {
         // todo make random table
-        this.$router.push({name: 'Test', params: {table: 10}})
+        this.$router.push({name: 'Test', params: {table: -1}})
       }
     }
   }
