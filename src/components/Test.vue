@@ -66,7 +66,7 @@
 
         <router-link :to="{ name: 'Test', params: {table: table}}"
                      class="button borders-0 bg-carrot hover-bg-orange color-yang block-s"
-                     :title="'Retry with the table '+ table">
+                     :title="'Retry with the table '+ table" replace>
           <span>Retry</span>
         </router-link>
       </div>
@@ -88,7 +88,7 @@
                 <span v-if="!response.isCorrect" class="color-alizarin">&#10007;</span>
                 <span v-else class="color-emerald">&#10003;</span>
 
-                <span class="font-weight-bold color-turquoise">{{ history.table}}</span>
+                <span class="font-weight-bold color-turquoise">{{ question.table}}</span>
                 <span>x </span>
                 <span class="font-weight-bold color-turquoise">{{ question.multiplicator}}</span>
                 <span>=</span>
@@ -122,14 +122,15 @@
     components: {Timer},
     data () {
       return {
+        evaluationMode: false,
         nbMaxTurn: 2, // set to 2 for test purposes
         turn: 1,
         score: 0,
         showResults: false,
         multiplicator: null,
         responses: [],
-        history: new History(this.table),
-        currentQuestion: new Question(),
+        history: new History(),
+        currentQuestion: new Question(this.table),
         timesSpend: [],
         timeSpend: null,
         startTimer: false,
@@ -143,6 +144,10 @@
     },
     methods: {
       play () {
+        if(this.evaluationMode){
+          /* TODO : random table */
+          //this.table =
+        }
         this.currentQuestion = new Question()
         this.timeSpend = new Ts()
         this.timesSpend.push(this.timeSpend)
@@ -155,6 +160,10 @@
       },
       getNextQuestion () {
         if (this.turn < this.nbMaxTurn) {
+          /* TODO : random table */
+          if(this.evaluationMode){
+            // this.table =
+          }
           this.turn++
           this.startTimer = false
           this.play()
@@ -164,6 +173,7 @@
         }
       },
       checkAnswer (response) {
+        /* TODO :  */
         if (!this.startTimer) {
           response.selected = true
           if (response.isCorrect) {
@@ -172,15 +182,20 @@
             this.startTimer = true
             this.currentQuestion.timeSpend = this.timeSpend.getTimeSpend()
           }
+
+
           this.currentQuestion.addResponse(response)
           if (!this.currentQuestion.isAlreadyFill) {
             this.currentQuestion.multiplicator = this.multiplicator
             this.currentQuestion.isAlreadyFill = true
             this.history.addQuestion(this.currentQuestion)
           }
+
+
         }
       },
       setResponses () {
+        /* TODO : */
         for (let i = 1; i <= 10; i++) {
           let isCorrect = this.getResult() === this.getResult(i)
           this.responses.push({value: this.getResult(i), isCorrect: isCorrect, selected: false})
@@ -210,6 +225,9 @@
       }
     },
     mounted () {
+      if (this.table === -1) {
+        this.evaluationMode = true
+      }
       this.play()
     }
   }

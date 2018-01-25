@@ -1,7 +1,6 @@
 class History {
 
-  constructor (table) {
-    this.table = table
+  constructor () {
     this.questions = []
     this.date = new Date()
   }
