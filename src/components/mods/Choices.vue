@@ -1,6 +1,13 @@
 <template>
   <div class="anim-forward overlay very-fast">
 
+
+    <div class="grid">
+      <div class="cell-12">
+        <h1 class="font-size-big margin-0-top text-center">The Test Mode</h1>
+      </div>
+    </div>
+
     <div class="grid-column-reverse-s">
       <div class="cell-12-no-gutters">
         <!-- Welcome note -->
