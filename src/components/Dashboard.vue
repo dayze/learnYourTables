@@ -8,7 +8,7 @@
            :class="['bg-' + color + '-pronounced', 'hover-bg-' + color]">
         <span class="font-size-jumbo">{{i + 1}}</span>
       </div>
-      <modal :classes="'modalStyle v--modal'" :adaptive="true" :name="'table-' + i">
+      <modal :classes="'modalStyle v--modal'" :name="'table-' + i">
         <dashboard-result :table="i + 1"></dashboard-result>
       </modal>
     </div>
