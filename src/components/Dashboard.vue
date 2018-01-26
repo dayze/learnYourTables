@@ -9,37 +9,19 @@
       </div>
     </div>
 
-
-    <!-- tables -->
-     <!-- <div class="contenu" v-for="(color, i) in listColor">
-
-        <div class="box color-yang shaded-box rounded flex justify-center align-items-center"
-             @click="showModal(i)"
-             :class="['bg-' + color + '-pronounced', 'hover-bg-' + color]">
-          <span class="font-size-jumbo">{{i + 1}}</span>
-        </div>
-
-
-        <modal :classes="'modalStyle v&#45;&#45;modal'" :name="'table-' + i">
-          <dashboard-result :table="i + 1"></dashboard-result>
-        </modal>
-
-
-      </div>-->
-
     <div class="grid justify-center-m">
-      <div :key="i"
-           :class="[i === 0 || i === 5 ? 'offset-1 offset-0-m' : '', 'bg-' + color + '-pronounced', 'hover-bg-' + color]"
-           class="cell-2 cell-3-m cell-4-s cell-6-xs rounded shaded-box text-center cursor-pointer hover-shaded-box padding"
-           v-for="(color, i) in listColor" @click="showModal(i)">
-        <span class="font-size-jumbo color-yang">{{i + 1}}</span>
+      <template class="contenu" v-for="(color,i) in listColor">
+        <div class="cell-2 cell-3-m cell-4-s cell-6-xs rounded shaded-box text-center cursor-pointer hover-shaded-box padding"
+             @click="showModal(i)"
+             :class="[i === 0 || i === 5 ? 'offset-1 offset-0-m' : '', 'bg-' + color + '-pronounced', 'hover-bg-' + color]">
+          <span class="font-size-jumbo color-yang">{{i + 1}}</span>
+        </div>
         <modal :classes="'modalStyle v--modal'" :name="'table-' + i">
           <dashboard-result :table="i + 1"></dashboard-result>
         </modal>
-      </div>
+      </template>
     </div>
-
-
+    
   </div>
 </template>
 
