@@ -2,3 +2,7 @@
   background-image: url('../img/school-board.jpg');
   background-position: center;
 }
+
+body {
+  background: #ecf0f1;
+}

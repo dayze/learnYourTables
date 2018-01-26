@@ -30,7 +30,7 @@
           </div>
           <router-link :key="index"
                        :class="[index === 0 || index === 5 ? 'offset-1 offset-0-m' : '', 'bg-' + color + '-pronounced', 'hover-bg-' + color]"
-                       class="cell-2 cell-3-m cell-4-s cell-6-xs shaded-box text-center color-yang cursor-pointer hover-shaded-box padding"
+                       class="cell-2 cell-3-m cell-4-s cell-6-xs rounded shaded-box text-center color-yang cursor-pointer hover-shaded-box padding"
                        v-for="(color, index) in listColor"
                        :to="{ name: 'Test', params: {table: index + 1}}">
             <span class="font-size-jumbo">{{index + 1}}</span>

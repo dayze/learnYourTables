@@ -1,6 +1,7 @@
 <template>
   <div class="overlay anim-backward very-fast">
 
+
     <!-- choose title -->
     <div class="grid">
       <div class="cell-12">
@@ -13,7 +14,7 @@
     <div class="grid-column-xs text-center align-items-center align-items-stretch-s justify-center-s">
 
       <router-link :to="{ name: 'LearningMode'}"
-                   class="cell-4 cell-8-s hover-shaded-box cursor-pointer">
+                   class="cell-4 cell-8-s hover-shaded-box cursor-pointer bg-yang">
         <figure>
           <div
             class="inline-block rounded-circle padding-30 padding-m borders-3 borders-clouds margin-50-top-bottom margin-top-bottom-s">
@@ -30,7 +31,7 @@
 
 
       <router-link :to="{ name: 'Choices'}"
-                   class="cell-4 cell-8-s hover-shaded-box cursor-pointer">
+                   class="cell-4 cell-8-s hover-shaded-box cursor-pointer bg-yang">
         <figure>
           <div
             class="inline-block rounded-circle padding-30 padding-m borders-3 borders-clouds margin-50-top-bottom margin-top-bottom-s">
@@ -48,7 +49,7 @@
 
 
       <router-link :to="{ name: 'Choices', params: {testType: TEST_TYPE_EVALUATION} }"
-                   class="cell-4 cell-8-s hover-shaded-box cursor-pointer">
+                   class="cell-4 cell-8-s hover-shaded-box cursor-pointer bg-yang">
         <figure>
           <div
             class="inline-block rounded-circle padding-30 padding-m borders-3 borders-clouds margin-50-top-bottom margin-top-bottom-s">
@@ -60,24 +61,6 @@
           <figcaption
             class="APP_bg_board margin-top font-size-big size-medium-s APP_font_ananda padding color-yang">
             Evaluation
-          </figcaption>
-        </figure>
-      </router-link>
-    </div>
-    <div class="grid-column-xs text-center align-items-center align-items-stretch-s justify-center">
-      <router-link :to="{ name: 'Dashboard'}"
-                   class="cell-4 cell-8-s hover-shaded-box cursor-pointer">
-        <figure>
-          <div
-            class="inline-block rounded-circle padding-30 padding-m borders-3 borders-clouds margin-50-top-bottom margin-top-bottom-s">
-            <img
-              class="responsive"
-              src="../assets/img/speedometer.png"
-              alt=""/>
-          </div>
-          <figcaption
-            class="APP_bg_board margin-top font-size-big size-medium-s APP_font_ananda padding color-yang">
-            Dashboard
           </figcaption>
         </figure>
       </router-link>

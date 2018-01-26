@@ -57,7 +57,6 @@
         }
       },
       colorByRatio (item) {
-        console.log(item.nbCorrect < item.nbFalse)
         if (item.nbCorrect < item.nbFalse) {
           return 'color-alizarin'
         } else if (item.nbCorrect > item.nbFalse) {

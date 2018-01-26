@@ -1,10 +1,10 @@
 <template>
-  <div class="overlay anim-backward fast">
+  <div class="overlay anim-forward very-fast">
 
 
     <div class="grid">
       <div class="cell-12">
-        <h1 class="margin-50-bottom font-size-giant margin-0-top text-center">
+        <h1 class="margin-50-bottom font-size-big margin-0-top text-center">
           <span v-if="evaluationMode">The Evaluation Mode</span>
           <span v-if="!evaluationMode">The Test Mode</span>
         </h1>
@@ -28,10 +28,16 @@
             <span>Question N°</span>
             <span class="color-turquoise">{{ turn }}</span>
             </span>
-            <timer class="inline-block overlay anim-backward very-fast" v-on:timerOver="getNextQuestion" :time="2"
-                   :start="startTimer">
-              Next question in
+            <span v-if="startTimer" class="block overlay anim-backward very-fast">
+
+              <span class="color-sun-flower">!</span>
+              <span>Next question in </span>
+                  <timer v-on:timerOver="getNextQuestion" class="inline-block"
+                         :time="2"
+                         :start="startTimer">
             </timer>
+              <span>seconds</span>
+            </span>
           </h1>
         </div>
         <div class="cell-12 text-center font-size-giant">
