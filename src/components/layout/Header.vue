@@ -11,7 +11,7 @@
           </router-link>
         </h1>
         <span
-          class="APP_font_bebas text-wide size-medium size-normal-s color-peter-river">Tests on multiplication tables</span>
+          class="APP_font_bebas text-wide size-medium size-normal-s color-emerald">Tests on multiplication tables</span>
       </div>
 
 
@@ -19,9 +19,9 @@
         <ul class="list-unstyled text-right padding-right-diffuser">
           <!-- dashboard -->
           <li>
-            <router-link :to="{ name: 'Dashboard'}" title="See the dashboard" class="bg-emerald button margin-bottom-m">
-              <img class="responsive margin-5-right" src="../../../src/assets/img/stats.png" alt=""/>
-              <span class="align-middle color-yang">My Statistics</span>
+            <router-link :to="{ name: 'Account'}" title="Account management" class="bg-emerald button margin-bottom-m">
+              <span class="align-middle color-yang">Habit Jérémy</span>
+              <img class="responsive margin-5-left" src="../../../src/assets/img/login.png" alt=""/>
             </router-link>
           </li>
         </ul>

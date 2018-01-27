@@ -87,27 +87,27 @@
 
       <!-- CORRECTION -->
       <div class="cell-12">
-        <!-- <ul class="list-unstyled font-size-normal padding-diffuser">
+        <!-- <ul model="list-unstyled font-size-normal padding-diffuser">
            <li v-for="(question, index) in this.history.questions">
-             <h2 class="margin-0-bottom">Question N° {{index}}</h2>
-             <ul class="list-unstyled padding">
+             <h2 model="margin-0-bottom">Question N° {{index}}</h2>
+             <ul model="list-unstyled padding">
                <li>
-                 <span class="font-weight-bold">Spend time :</span>
+                 <span model="font-weight-bold">Spend time :</span>
                  <span>{{ question.timeSpend }} seconds</span>
                </li>
                <li>
                  You made {{question.responses.length - 1 }} error(s)
                </li>
                <li v-for="response in question.responses">
-                 <span v-if="!response.isCorrect" class="color-alizarin">&#10007;</span>
-                 <span v-else class="color-emerald">&#10003;</span>
+                 <span v-if="!response.isCorrect" model="color-alizarin">&#10007;</span>
+                 <span v-else model="color-emerald">&#10003;</span>
 
-                 <span class="font-weight-bold color-turquoise">{{ question.table }}</span>
+                 <span model="font-weight-bold color-turquoise">{{ question.table }}</span>
                  <span>x </span>
-                 <span class="font-weight-bold color-turquoise">{{ question.multiplicator}}</span>
+                 <span model="font-weight-bold color-turquoise">{{ question.multiplicator}}</span>
                  <span>=</span>
                  <span
-                   :class="[response.isCorrect ? 'color-emerald' : 'color-alizarin text-line-through']">{{response.value}}</span>
+                   :model="[response.isCorrect ? 'color-emerald' : 'color-alizarin text-line-through']">{{response.value}}</span>
                </li>
              </ul>
            </li>
@@ -152,9 +152,9 @@
 
 <script>
   import shuffle from 'lodash/shuffle'
-  import History from '../History'
-  import Question from '../Question'
-  import Ts from '../TimeSpend'
+  import History from '../model/History'
+  import Question from '../model/Question'
+  import Ts from '../model/TimeSpend'
   import { listColor } from './../staticColor'
   import Timer from './timer/Timer'
 
@@ -204,6 +204,9 @@
       },
       endPlay () {
         this.$router.go(-1)
+      },
+      getCurrentUser(){
+
       },
       getNextQuestion () {
         if (this.turn < this.nbMaxTurn) {

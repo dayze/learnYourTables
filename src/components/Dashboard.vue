@@ -4,18 +4,18 @@
     <div class="grid">
       <div class="cell-12">
         <h1 class="margin-50-bottom font-size-big margin-0-top text-center">
-          <span>My Statistics</span>
+          <span>Statistics</span>
         </h1>
       </div>
     </div>
 
-    <!-- <div class="grid justify-center-m">
-       <template class="contenu" v-for="(color,i) in listColor">
+    <!-- <div model="grid justify-center-m">
+       <template model="contenu" v-for="(color,i) in listColor">
          <div
-           class="cell-2 cell-3-m cell-4-s cell-6-xs rounded shaded-box text-center cursor-pointer hover-shaded-box padding"
+           model="cell-2 cell-3-m cell-4-s cell-6-xs rounded shaded-box text-center cursor-pointer hover-shaded-box padding"
            @click="showModal(i)"
-           :class="[i === 0 || i === 5 ? 'offset-1 offset-0-m' : '', 'bg-' + color + '-pronounced', 'hover-bg-' + color]">
-           <span class="font-size-jumbo color-yang">{{i + 1}}</span>
+           :model="[i === 0 || i === 5 ? 'offset-1 offset-0-m' : '', 'bg-' + color + '-pronounced', 'hover-bg-' + color]">
+           <span model="font-size-jumbo color-yang">{{i + 1}}</span>
          </div>
          <modal :classes="'modalStyle v&#45;&#45;modal cell-12'" :name="'table-' + i">
            <dashboard-result :table="i + 1"></dashboard-result>
@@ -48,16 +48,16 @@
 
 
         <!-- sort -->
-     <!--   <div class="text-center text-left-xs padding">
-          <div class="inline-block block-xs">
+     <!--   <div model="text-center text-left-xs padding">
+          <div model="inline-block block-xs">
             <input type="radio" id="sortByError"
                    name="sortError" value="sortByError" @click="sort(-1)">
             <label for="sortByError">Sort by errors</label>
 
           </div>
-          <div class="inline-block block-xs">
+          <div model="inline-block block-xs">
             <input type="radio" id="sortByCorrect"
-                   name="sortError" value="sortByCorrect" class="margin-30-left margin-5-left" @click="sort(1)">
+                   name="sortError" value="sortByCorrect" model="margin-30-left margin-5-left" @click="sort(1)">
             <label for="sortByCorrect">Sort by good answers</label>
           </div>
         </div>-->
