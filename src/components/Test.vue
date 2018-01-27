@@ -4,29 +4,33 @@
 
     <div class="grid">
       <div class="cell-12">
-        <h1 class="margin-50-bottom font-size-big margin-0-top text-center">
-          <span v-if="evaluationMode">The Evaluation Mode</span>
-          <span v-if="!evaluationMode">The Test Mode</span>
-        </h1>
+        <h1 class="margin-0 size-big margin-0-top borders-bottom borders-silver">
+        <span v-if="evaluationMode">The Evaluation Mode</span>
+        <span v-if="!evaluationMode">The Test Mode</span>
+      </h1>
       </div>
     </div>
 
     <!-- ##### QUESTION TEST -->
     <div v-if="!showResults">
+
       <!-- ##### TABLE TITLE -->
       <div class="grid">
         <div class="cell-12">
-          <h1 :class="'borders-'+tableColor"
-              class="font-size-big font-size-normal-s bg-clouds padding borders-5-left margin-0 text-unstyled text-wide">
-            <span>Table </span><span :class="'coldor-'+tableColor">{{ currentTable }}</span></h1>
+          <h1 :class="'bg-'+tableColor"
+              class="font-size-big size-normal-s padding margin-0 text-unstyled wide color-yang">
+            <span>Table {{ currentTable }}</span>
+          </h1>
         </div>
       </div>
+
+      <!-- ##### QUESTION -->
       <div class="grid justify-center">
         <div class="cell-12">
           <h1 class="text-center-m font-size-medium text-unstyled margin-0-bottom">
             <span v-if="!startTimer" class="overlay inline-block anim-forward very-fast">
-            <span>Question N°</span>
-            <span class="color-turquoise">{{ turn }}</span>
+            <span>Question</span>
+            <span class="font-weight-bold">#{{ turn }}</span>
             </span>
             <span v-if="startTimer" class="block overlay anim-backward very-fast">
 
@@ -41,9 +45,9 @@
           </h1>
         </div>
         <div class="cell-12 text-center font-size-giant">
-          <span class="font-weight-bold color-turquoise">{{ currentTable }}</span>
+          <span class="font-weight-bold" :class="'color-'+tableColor">{{ currentTable }}</span>
           <span>x </span>
-          <span class="font-weight-bold color-turquoise">{{ multiplicator}}</span>
+          <span class="font-weight-bold">{{ multiplicator}}</span>
           <span>=</span>
           <span class="color-orange">?</span>
         </div>
@@ -79,19 +83,40 @@
            title="Select an other one table">
           Choose an other one table
         </a>
-        <!--
-                <router-link :to="{ name: 'Test', params: {table: currentTable}}"
-                             class="button borders-0 bg-carrot hover-bg-orange color-yang block-s"
-                             :title="'Retry with the table '+ currentTable" replace>
-                  <span>Retry</span>
-                </router-link>-->
       </div>
 
       <!-- CORRECTION -->
       <div class="cell-12">
-        <ul class="list-unstyled font-size-normal padding-diffuser">
-          <li v-for="(question, index) in this.history.questions">
-            <h2 class="margin-0-bottom">Question N° {{index}}</h2>
+        <!-- <ul class="list-unstyled font-size-normal padding-diffuser">
+           <li v-for="(question, index) in this.history.questions">
+             <h2 class="margin-0-bottom">Question N° {{index}}</h2>
+             <ul class="list-unstyled padding">
+               <li>
+                 <span class="font-weight-bold">Spend time :</span>
+                 <span>{{ question.timeSpend }} seconds</span>
+               </li>
+               <li>
+                 You made {{question.responses.length - 1 }} error(s)
+               </li>
+               <li v-for="response in question.responses">
+                 <span v-if="!response.isCorrect" class="color-alizarin">&#10007;</span>
+                 <span v-else class="color-emerald">&#10003;</span>
+
+                 <span class="font-weight-bold color-turquoise">{{ question.table }}</span>
+                 <span>x </span>
+                 <span class="font-weight-bold color-turquoise">{{ question.multiplicator}}</span>
+                 <span>=</span>
+                 <span
+                   :class="[response.isCorrect ? 'color-emerald' : 'color-alizarin text-line-through']">{{response.value}}</span>
+               </li>
+             </ul>
+           </li>
+         </ul>-->
+
+        <div class="grid justify-center">
+
+          <div class="cell-3 borders borders-silver rounded" v-for="(question, index) in this.history.questions">
+            <h2 class="margin-0 padding-10 bg-clouds">Question N° {{index + 1}}</h2>
             <ul class="list-unstyled padding">
               <li>
                 <span class="font-weight-bold">Spend time :</span>
@@ -112,8 +137,11 @@
                   :class="[response.isCorrect ? 'color-emerald' : 'color-alizarin text-line-through']">{{response.value}}</span>
               </li>
             </ul>
-          </li>
-        </ul>
+          </div>
+
+        </div>
+
+
       </div>
 
 

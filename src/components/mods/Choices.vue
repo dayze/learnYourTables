@@ -2,9 +2,9 @@
   <div class="anim-forward overlay very-fast">
 
 
-    <div class="grid">
-      <div class="cell-12">
-        <h1 class="font-size-big margin-0-top text-center">The Test Mode</h1>
+    <div class="grid justify-center">
+      <div class="cell-10 cell-12-m">
+        <h1 class="margin-0 size-big margin-0-top borders-bottom borders-silver">The Test Mode</h1>
       </div>
     </div>
 
@@ -13,7 +13,7 @@
         <!-- Welcome note -->
 
         <div class="grid justify-center">
-          <div class="cell-10">
+          <div class="cell-10 cell-12-m">
             <p class="text-center-m font-size-medium">What is it ?</p>
             <p>
               Here you can learn tables very easily. Choose one of the tables for which you want to train, and try to
@@ -61,7 +61,6 @@
     },
     mounted () {
       if (this.testType === TEST_TYPE_EVALUATION) {
-        // todo make random table
         this.$router.push({name: 'Test', params: {table: -1}})
       }
     }

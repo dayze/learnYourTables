@@ -3,8 +3,8 @@
 
     <div class="grid">
       <div class="cell-12">
-        <h1 class="margin-50-bottom font-size-big margin-0-top text-center">The Learning Mode</h1>
-        <h2 class="text-center margin-0-top size-medium wide uppercase weight-light">
+        <h1 class="margin-0 size-big margin-0-top borders-bottom borders-silver">The Learning Mode</h1>
+        <h2 class="text-center margin-50-top medium wide uppercase weight-light">
           Let's revise all tables !</h2>
       </div>
     </div>
