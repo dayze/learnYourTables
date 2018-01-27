@@ -1,4 +1,4 @@
-header {
+header div:first-child {
   background-image: url('../../img/school-board.jpg');
   background-attachment: fixed;
   background-position: center;
