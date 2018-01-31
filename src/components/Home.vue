@@ -50,7 +50,8 @@
 
 
         <router-link :to="{ name: 'Choices', params: {testType: TEST_TYPE_EVALUATION} }"
-                     class="cell-4 cell-8-s hover-shaded-box cursor-pointer bg-yang">
+                     class="cell-4 cell-8-s hover-shaded-box cursor-pointer bg-yang"
+                     v-if="UserManager.getCurrentUser().hasUnlockedEvaluationMod">
           <figure>
             <div
               class="inline-block rounded-circle padding-30 padding-m borders-3 borders-clouds margin-50-top-bottom margin-top-bottom-s">
@@ -65,6 +66,28 @@
             </figcaption>
           </figure>
         </router-link>
+
+        <div class="cell-4 cell-8-s shaded-box cursor-not-allowed bg-yang" v-else>
+          <figure class="opacity-light">
+            <div
+              class="inline-block rounded-circle padding-30 padding-m borders-3 borders-clouds margin-50-top-bottom margin-top-bottom-s">
+              <img
+                class="responsive"
+                src="../assets/img/evaluation.png"
+                alt=""/>
+            </div>
+            <figcaption
+              class="APP_bg_board margin-top font-size-big size-medium-s APP_font_ananda padding color-yang">
+              Evaluation
+            </figcaption>
+          </figure>
+          <div class="absolute-row-middle">
+            <h2 class="font-size-big color-alizarin">Locked !</h2>
+            <span class="padding font-weight-bold">Test yourself with all the tables to unlock this mod.</span>
+          </div>
+
+        </div>
+
       </div>
     </div>
 

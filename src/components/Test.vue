@@ -145,7 +145,7 @@
       return {
         currentTable: this.table,
         evaluationMode: false,
-        nbMaxTurn: 2, // set to 2 for test purposes
+        nbMaxTurn: 1, // set to 2 for test purposes
         turn: 1,
         score: 0,
         showResults: false,
@@ -193,6 +193,14 @@
           /*this.history.gameEnd()*/
           let currentUser = new UserManager().getCurrentUser()
           currentUser.histories.push(this.history)
+          for (let aQuestion of this.history.questions) {
+            if (!currentUser.testedTables.includes(aQuestion.table)) {
+              currentUser.testedTables.push(aQuestion.table)
+            }
+          }
+          if (currentUser.testedTables.length === 10) {
+            currentUser.hasUnlockedEvaluationMod = true
+          }
           localStorage.setItem(currentUser.key, JSON.stringify(currentUser))
         }
       },

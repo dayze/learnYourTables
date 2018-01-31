@@ -7,6 +7,8 @@ class User {
     this.histories = []
     this.date = new Date()
     this.key = 'user-' + this.date.getTime()
+    this.hasUnlockedEvaluationMod = false
+    this.testedTables = []
   }
 
   addHistory (history) {
