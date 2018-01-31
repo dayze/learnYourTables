@@ -8,10 +8,10 @@ class History {
   addQuestion (question) {
     this.questions.push(question)
   }
-
+/*
   gameEnd () {
     window.localStorage.setItem('' + this.date.getTime(), JSON.stringify(this))
-  }
+  }*/
 
   getTotalErrors () {
     let errors = 0

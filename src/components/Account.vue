@@ -36,11 +36,12 @@
         <div class="grid-column-xs margin-50-top">
           <!-- add button -->
           <div @click="displayForm = true"
-               class="cell-3 cell-4-m cell-6-s borders-dashed color-silver borders-silver rounded hover-shaded-box cursor-pointer text-center padding padding-50-xs font-size-giant align-middle text-capitalize">
-            <div class="absolute-row-middle">+</div>
+               class="cell-3 cell-4-m cell-6-s borders-dashed color-silver borders-silver rounded hover-shaded-box cursor-pointer text-center padding size-big align-middle capitalize APP_font_ananda">
+            <div>New user</div>
+            <div>+</div>
           </div>
           <div @click="changeCurrentUser(user)" v-if="user.date !== currentUser.date"
-               class="cell-3 cell-4-m cell-6-s rounded bg-clouds hover-shaded-box cursor-pointer text-center padding font-size-big text-capitalize APP_font_ananda"
+               class="cell-3 cell-4-m cell-6-s rounded bg-clouds hover-shaded-box cursor-pointer text-center padding size-big capitalize APP_font_ananda"
                v-for="user in UserManager.getAllUsers()">
             <div>{{user.name}}</div>
             <div>{{user.lastName}}</div>

@@ -5,9 +5,9 @@
     <div class="grid">
       <div class="cell-12">
         <h1 class="margin-0 size-big margin-0-top borders-bottom borders-silver">
-        <span v-if="evaluationMode">The Evaluation Mode</span>
-        <span v-if="!evaluationMode">The Test Mode</span>
-      </h1>
+          <span v-if="evaluationMode">The Evaluation Mode</span>
+          <span v-if="!evaluationMode">The Test Mode</span>
+        </h1>
       </div>
     </div>
 
@@ -132,6 +132,8 @@
   import Ts from '../model/TimeSpend'
   import { listColor } from './../staticColor'
   import Timer from './timer/Timer'
+  import UserManager from '../model/UserManager'
+  import User from '../model/User'
 
   export default {
     name: 'tables',
@@ -180,9 +182,6 @@
       endPlay () {
         this.$router.go(-1)
       },
-      getCurrentUser(){
-
-      },
       getNextQuestion () {
         if (this.turn < this.nbMaxTurn) {
           this.turn++
@@ -190,7 +189,11 @@
           this.play()
         } else {
           this.showResults = true
-          this.history.gameEnd()
+          /* TODO : add history to current user */
+          /*this.history.gameEnd()*/
+          let currentUser = new UserManager().getCurrentUser()
+          currentUser.histories.push(this.history)
+          localStorage.setItem(currentUser.key, JSON.stringify(currentUser))
         }
       },
       checkAnswer (response) {
