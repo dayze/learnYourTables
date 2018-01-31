@@ -9,20 +9,6 @@
       </div>
     </div>
 
-    <!-- <div model="grid justify-center-m">
-       <template model="contenu" v-for="(color,i) in listColor">
-         <div
-           model="cell-2 cell-3-m cell-4-s cell-6-xs rounded shaded-box text-center cursor-pointer hover-shaded-box padding"
-           @click="showModal(i)"
-           :model="[i === 0 || i === 5 ? 'offset-1 offset-0-m' : '', 'bg-' + color + '-pronounced', 'hover-bg-' + color]">
-           <span model="font-size-jumbo color-yang">{{i + 1}}</span>
-         </div>
-         <modal :classes="'modalStyle v&#45;&#45;modal cell-12'" :name="'table-' + i">
-           <dashboard-result :table="i + 1"></dashboard-result>
-         </modal>
-       </template>
-     </div>-->
-
     <!-- CHOICES -->
     <div class="grid justify-center justify-start-s">
       <div v-for="(color,i) in listColor"
@@ -45,22 +31,6 @@
 
       <!-- results -->
       <div class="cell-12 table-responsive margin-50-top" v-else>
-
-
-        <!-- sort -->
-     <!--   <div model="text-center text-left-xs padding">
-          <div model="inline-block block-xs">
-            <input type="radio" id="sortByError"
-                   name="sortError" value="sortByError" @click="sort(-1)">
-            <label for="sortByError">Sort by errors</label>
-
-          </div>
-          <div model="inline-block block-xs">
-            <input type="radio" id="sortByCorrect"
-                   name="sortError" value="sortByCorrect" model="margin-30-left margin-5-left" @click="sort(1)">
-            <label for="sortByCorrect">Sort by good answers</label>
-          </div>
-        </div>-->
 
 
         <!-- title -->
@@ -107,7 +77,7 @@
 
 <script>
   import { listColor } from '../staticColor'
-  import sortBy from 'lodash/sortBy'
+  import UserManager from '../model/UserManager'
 
   export default {
     name: 'Dashboard',
@@ -132,12 +102,18 @@
         this.makeResult()
       },
       setDataFromLocalStorage () {
-        for (let i = 0, len = localStorage.length; i < len; ++i) {
+        /* TODO : select current user */
+        let currentUser = new UserManager().getCurrentUser()
+        for(let history of currentUser.histories){
+          this.storageData.push(history)
+        }
+
+        /*for (let i = 0, len = localStorage.length; i < len; ++i) {
           let onlyNumber = /^[0-9]+$/
           if (onlyNumber.test(localStorage.key(i))) {
             this.storageData.push(JSON.parse(localStorage.getItem(localStorage.key(i))))
           }
-        }
+        }*/
       },
       makeResult () {
         this.data = []
@@ -167,16 +143,7 @@
             }
           }
         }
-      }, /*
-      sort (order) {
-        if (order === -1) {
-          /!* sort by errors *!/
-          this.data = sortBy(this.data, ['', 'nbFalse'])
-        } else {
-          /!* sort by good answers *!/
-          this.data = sortBy(this.data, 'nbCorrect')
-        }
-      }*/
+      }
     },
     mounted () {
       this.setDataFromLocalStorage()
