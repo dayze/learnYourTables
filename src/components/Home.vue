@@ -2,7 +2,7 @@
   <div class="overlay anim-backward very-fast">
 
 
-    <div v-if="oneUserExists">
+    <div v-if="UserManager.checkOneUserExists()">
       <!-- choose title -->
       <div class="grid">
         <div class="cell-12">
@@ -78,6 +78,7 @@
 <script>
   import { TEST_TYPE_EVALUATION, TEST_TYPE_LEARNING } from './../const'
   import FormAddUser from '../components/FormAddUser.vue'
+  import UserManager from '../model/UserManager'
 
   export default {
     name: 'Home',
@@ -86,19 +87,9 @@
     },
     data () {
       return {
-        oneUserExists: this.checkOneUserExists(),
+        UserManager: new UserManager(),
         TEST_TYPE_EVALUATION,
         TEST_TYPE_LEARNING
-      }
-    },
-    methods: {
-      checkOneUserExists () {
-        for (let i = 0, len = localStorage.length; i < len; ++i) {
-          if (localStorage.key(i).substring(0, 5) === 'user-') {
-            return true
-          }
-        }
-        return false
       }
     }
   }

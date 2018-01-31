@@ -1,7 +1,7 @@
 <template>
-  <div class="grid">
+  <div class="grid borders borders-silver padding">
     <div class="cell-12">
-      <p class="text-center size-big">Let's create a new profil !</p>
+      <p class="text-center size-big margin-0-top">Let's create a new profil !</p>
       <form class="form template required width-50 margin-auto">
         <div class="layout-group">
           <label for="name">Name</label>
@@ -20,6 +20,9 @@
 
 <script>
 
+  import User from '../model/User'
+  import UserManager from '../model/UserManager'
+
   export default {
     name: 'FormAddUser',
     data () {
@@ -30,9 +33,12 @@
     },
     methods: {
       addUser () {
-        /* if(){
-
-         }*/
+        if (this.userName && this.userLastName) {
+          let user = new User(this.userName, this.userLastName)
+          user.stock()
+          new UserManager().changeCurrentUser(user)
+          location.reload()
+        }
       }
     }
   }

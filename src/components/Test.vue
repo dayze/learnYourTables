@@ -87,31 +87,6 @@
 
       <!-- CORRECTION -->
       <div class="cell-12">
-        <!-- <ul model="list-unstyled font-size-normal padding-diffuser">
-           <li v-for="(question, index) in this.history.questions">
-             <h2 model="margin-0-bottom">Question N° {{index}}</h2>
-             <ul model="list-unstyled padding">
-               <li>
-                 <span model="font-weight-bold">Spend time :</span>
-                 <span>{{ question.timeSpend }} seconds</span>
-               </li>
-               <li>
-                 You made {{question.responses.length - 1 }} error(s)
-               </li>
-               <li v-for="response in question.responses">
-                 <span v-if="!response.isCorrect" model="color-alizarin">&#10007;</span>
-                 <span v-else model="color-emerald">&#10003;</span>
-
-                 <span model="font-weight-bold color-turquoise">{{ question.table }}</span>
-                 <span>x </span>
-                 <span model="font-weight-bold color-turquoise">{{ question.multiplicator}}</span>
-                 <span>=</span>
-                 <span
-                   :model="[response.isCorrect ? 'color-emerald' : 'color-alizarin text-line-through']">{{response.value}}</span>
-               </li>
-             </ul>
-           </li>
-         </ul>-->
 
         <div class="grid justify-center">
 
