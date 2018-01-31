@@ -17,10 +17,6 @@
     components: {
       FooterLayout,
       HeaderLayout
-    },
-    mounted () {
-      //localStorage.clear()
-      console.log(localStorage)
     }
   }
 </script>

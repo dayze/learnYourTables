@@ -102,18 +102,10 @@
         this.makeResult()
       },
       setDataFromLocalStorage () {
-        /* TODO : select current user */
         let currentUser = new UserManager().getCurrentUser()
         for(let history of currentUser.histories){
           this.storageData.push(history)
         }
-
-        /*for (let i = 0, len = localStorage.length; i < len; ++i) {
-          let onlyNumber = /^[0-9]+$/
-          if (onlyNumber.test(localStorage.key(i))) {
-            this.storageData.push(JSON.parse(localStorage.getItem(localStorage.key(i))))
-          }
-        }*/
       },
       makeResult () {
         this.data = []
@@ -123,8 +115,6 @@
         for (let data of this.storageData) {
           for (let question of data.questions) {
             if (question.table === this.chosenTable) {
-              console.log('question' + question.table)
-              console.log('chosen:' + this.chosenTable)
               for (let response of question.responses) {
                 if (response.isCorrect) {
                   let newNbCorrect = this.data[question.multiplicator - 1].nbCorrect + 1
