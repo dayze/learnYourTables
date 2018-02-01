@@ -37,7 +37,7 @@
               <span class="color-sun-flower">!</span>
               <span>Next question in </span>
                   <timer v-on:timerOver="getNextQuestion" class="inline-block"
-                         :time="2"
+                         :time="5"
                          :start="startTimer">
             </timer>
               <span>seconds</span>
@@ -145,7 +145,7 @@
       return {
         currentTable: this.table,
         evaluationMode: false,
-        nbMaxTurn: 1, // set to 2 for test purposes
+        nbMaxTurn: 10,
         turn: 1,
         score: 0,
         showResults: false,
