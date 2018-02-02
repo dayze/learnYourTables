@@ -145,7 +145,7 @@
       return {
         currentTable: this.table,
         evaluationMode: false,
-        nbMaxTurn: 10,
+        nbMaxTurn: 2,
         turn: 1,
         score: 0,
         showResults: false,

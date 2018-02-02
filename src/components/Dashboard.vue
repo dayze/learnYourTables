@@ -49,6 +49,9 @@
             <th>
               <img src="../assets/img/sad-smiley.png" class="icon">
             </th>
+            <th>
+              <img src="../assets/img/percent.png" class="icon" alt="">
+            </th>
           </tr>
           </thead>
           <tbody>
@@ -62,6 +65,7 @@
             </td>
             <td :class="item.nbCorrect > 0 ? 'color-emerald font-weight-bold': ''">{{item.nbCorrect}}</td>
             <td :class="item.nbFalse > 0 ? 'color-alizarin font-weight-bold': ''">{{item.nbFalse}}</td>
+            <td class="font-weight-bold">{{percentageResponses(item.nbCorrect, item.nbFalse)}}</td>
           </tr>
 
 
@@ -97,13 +101,24 @@
       }
     },
     methods: {
+      percentageResponses (nbCorrect, nbFalse) {
+        if (nbCorrect === 0 && nbFalse === 0) {
+          return 'Not done yet'
+        } else if (nbFalse === 0) {
+          return '100%'
+        } else if (nbCorrect === 0) {
+          return '0%'
+        } else {
+          return Math.round((nbCorrect / (nbCorrect + nbFalse)) * 100 )+ '%'
+        }
+      },
       setChosenTable (table) {
         this.chosenTable = table
         this.makeResult()
       },
       setDataFromLocalStorage () {
         let currentUser = new UserManager().getCurrentUser()
-        for(let history of currentUser.histories){
+        for (let history of currentUser.histories) {
           this.storageData.push(history)
         }
       },
